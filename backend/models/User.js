@@ -5,7 +5,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 const userSchema = new mongoose.Schema({
     name:{type: String,required: true, message : "Please enter you name"},
 
-    username:{type: String, unique: true, required: true},
+    userName:{type: String, unique: true, required: true},
 
     email: {type: String, unique: true, lowercase: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid']},
 

@@ -26,7 +26,7 @@ async function registerNewUser (req, res) {
                 password: hashedPassword        
             })
                 console.log(user)
-                return res.status(200).json({message: `Account linked to ${req.user.email} created`});
+                return res.status(200).json({message: `Account linked to ${req.body.email} created`});
 
         } catch(error) {
             console.log(error)
@@ -71,11 +71,11 @@ async function logoutUser (req, res) {
 }
 
 async function deleteUser (req,res) {
-
+//change req.body.email for _id: req.user._id
   try {
-    const result = await userModel.deleteOne({_id: user.id});
+    const result = await userModel.deleteOne({email: req.body.email});
     if (result.deletedCount === 1) {
-      res.status(200).json({message: `Successfully deleted ${user.email} account.`});
+      res.status(200).json({message: `Successfully deleted ${req.body.email} account.`});
     } else {
       res.status(400).json({message: `This user doesn't exist`});
     }
@@ -89,6 +89,9 @@ async function updateUser (req,res) {
 
     let hashedPassword
     req.body.password && (hashedPassword = await bcrypt.hash(req.body.password, 10))
+
+    console.log(req.user)
+    let userID = req.user._id
 
     let newUserInfo = {
         name: req.body.name,
@@ -104,11 +107,10 @@ async function updateUser (req,res) {
     // }
 
     try {
-
-    newUserInfo.name && await userModel.updateOne({_id: user.id}, {name: newUserInfo.name}) //update name
-    newUserInfo.userName && await userModel.updateOne({_id: user.id}, {userName: newUserInfo.userName}) //update userName
-    newUserInfo.email && await userModel.updateOne({_id: user.id}, {email: newUserInfo.email}) //update email
-    newUserInfo.password && await userModel.updateOne({_id: user.id}, {password: newUserInfo.password}) //update password
+    newUserInfo.name && await userModel.updateOne({_id: userID}, {name: newUserInfo.name}) //update name
+    newUserInfo.userName && await userModel.updateOne({_id: userID}, {userName: newUserInfo.userName}) //update userName
+    newUserInfo.email && await userModel.updateOne({_id: userID}, {email: newUserInfo.email}) //update email
+    newUserInfo.password && await userModel.updateOne({_id: userID}, {password: newUserInfo.password}) //update password
 
     return res.status(200).json({
         message: "User information updated",

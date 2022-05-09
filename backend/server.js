@@ -1,8 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
-const cors = require('cors')
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const passport = require('passport')
 const session = require('express-session')
 const cors = require('cors')
@@ -17,15 +15,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-const usersRoute = require('./routes/users')
+// const usersRoute = require('./routes/users')
 const authRoute = require('./routes/auth');
-const postRoute = require('./routes/posts');
+// const postRoute = require('./routes/posts');
 
 
 app.use('/', express.static('./public'))
 app.use("/auth", authRoute);
-app.use("/users", usersRoute);
-app.use("/posts", postRoute);
+// app.use("/users", usersRoute);
+// app.use("/posts", postRoute);
 
 
 
@@ -93,7 +91,7 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, process.env.PORTNAME, (err) => {
     if (err) console.log(err);
-    console.log(`Express server running on port ${port}...`);
+    console.log(`Express server running on port ${PORT}...`);
   })
   
 
