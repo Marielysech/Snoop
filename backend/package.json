@@ -1,0 +1,40 @@
+{
+  "name": "snoop---final-project",
+  "version": "1.0.0",
+  "description": "Dog social media app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marielysech/Snoop.git"
+  },
+  "keywords": [
+    "social-media"
+  ],
+  "author": "Marie-Lyse Charrière",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Marielysech/Snoop/issues"
+  },
+  "homepage": "https://github.com/Marielysech/Snoop#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "collect.js": "^4.32.0",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.0",
+    "express": "~4.16.1",
+    "express-session": "^1.17.2",
+    "http-errors": "^2.0.0",
+    "moment": "^2.29.3",
+    "mongoose": "^6.2.10",
+    "mongoose-unique-validator": "^3.0.0",
+    "nodemon": "^2.0.16",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0"
+  }
+}
