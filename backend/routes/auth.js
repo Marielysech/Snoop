@@ -15,8 +15,7 @@ router.post('/delete', authController.deleteUser);
 
 router.post('/settings', authController.updateUser);
 
-
-
+// do I need this ?? router.get("/getuser", authController.getUser);
 
 
 

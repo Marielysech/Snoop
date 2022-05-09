@@ -8,7 +8,7 @@ const userController = require('../controllers/usersC')
 // router.get('/', userController.getFeedPosts);
 
 
-router.get('/profile', userController.getUserPosts);
+router.get('/:user', userController.getUserPosts);
 
 router.route('/favorites')
     .get(userController.getuserFavorites)
