@@ -8,13 +8,14 @@ const userController = require('../controllers/usersC')
 
 router.get('/feed', userController.getFollowedPosts);
 
-router.get('/:userName', userController.getUserPosts);
+router.route('/:userName')
+    .get(userController.getUserPosts)
+    .post(userController.followUser)
 
-router.route('/favorites')
-    .get(userController.getuserFavorites)
-    .post(userController.likePost)
+router.get('/favorites',userController.getuserFavorites)
+router.post('/favorites/:id',userController.likePost)
 
-router.get('/following', userController.followUser);
+
 
 
 
