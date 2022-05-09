@@ -30,6 +30,7 @@
     "express": "~4.16.1",
     "express-session": "^1.17.2",
     "http-errors": "^2.0.0",
+    "moment": "^2.29.3",
     "mongoose": "^6.2.10",
     "mongoose-unique-validator": "^3.0.0",
     "nodemon": "^2.0.16",

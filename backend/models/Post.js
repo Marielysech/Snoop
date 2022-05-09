@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 var uniqueValidator = require('mongoose-unique-validator');
 
 
 const postSchema = new mongoose.Schema({
-    date:{type: Date, default: Date.now},
+    date:{type: String, default: moment().calendar()},
 
     author:{ type: mongoose.Schema.Types.ObjectId, ref: "User", default : [] },
 

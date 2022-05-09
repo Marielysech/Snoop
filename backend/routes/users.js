@@ -5,18 +5,17 @@ const userController = require('../controllers/usersC')
 
 //TODO : add authorization for limited access
 
-// router.get('/', userController.getFeedPosts);
 
+router.get('/feed', userController.getFollowedPosts);
 
-router.get('/:user', userController.getUserPosts);
+router.get('/:userName', userController.getUserPosts);
 
 router.route('/favorites')
     .get(userController.getuserFavorites)
-    .post(userController.addToFavPost)
+    .post(userController.likePost)
 
 router.get('/following', userController.followUser);
 
-router.get('/feed', userController.getFollowedPosts);
 
 
 

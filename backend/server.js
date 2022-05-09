@@ -17,13 +17,13 @@ app.use(express.urlencoded({ extended: true }));
 // routes
 // const usersRoute = require('./routes/users')
 const authRoute = require('./routes/auth');
-// const postRoute = require('./routes/posts');
+const postRoute = require('./routes/posts');
 
 
 app.use('/', express.static('./public'))
 app.use("/auth", authRoute);
 // app.use("/users", usersRoute);
-// app.use("/posts", postRoute);
+app.use("/posts", postRoute);
 
 
 
