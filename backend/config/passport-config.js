@@ -37,8 +37,8 @@ passport.use(new LocalStrategy(customFields, authenticateUser))
 
 
 passport.serializeUser((user, done) => {
-  console.log('serialize fct ' + user)
-  return done(null, user._id)
+  console.log('serialize fct ' + user.id)
+  return done(null, user.id)
 })
 passport.deserializeUser(async (_id, done) => {
   const user = await userModel.findOne({_id: _id});

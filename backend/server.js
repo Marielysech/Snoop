@@ -22,11 +22,13 @@ const postRoute = require('./routes/posts');
 
 
 // passport configuration
+app.use(passport.initialize())
 
 const sessionStore = new MongoStore({
   mongoUrl: process.env.DB_SERVER,
   collection: "sessions",
 }); 
+
 
 app.use(session({
   secret: process.env.SESSION_KEY,
@@ -38,15 +40,11 @@ app.use(session({
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24,
     sameSite: true,
-    secure: true
+    secure: false
   },
 }))
 
-app.use(passport.initialize())
-
-
 app.use(passport.session())
-
 
 // database connexion
 mongoose.connect(process.env.DB_SERVER)

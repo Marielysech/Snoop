@@ -18,7 +18,8 @@ const DeleteUser = () => {
         };
 
         fetch('/auth/delete', requestOptions)
-        .then(res => console.log('user account has been deleted'))
+        .then(res => res.json())
+        .then(data => console.log(data) )
         setUserInfo({name: "", userName: "", email: ""})
         navigate('/', {replace:true})
   }

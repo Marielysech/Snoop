@@ -2,7 +2,10 @@ const userModel = require('../models/User')
 const bcrypt = require('bcrypt')
 const initialize = require('../config/passport-config')
 const passport = require('passport')
-
+const express = require('express');
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 initialize(passport);
 
 async function registerNewUser (req, res) { 
@@ -76,11 +79,13 @@ async function logoutUser (req, res) {
 async function deleteUser (req,res) {
 //change req.body.email for _id: req.user._id
   try {
-    console.log(req.user)
-    const result = await userModel.deleteOne({name: req.user.name});
-    if (result.deletedCount === 1) {
+    const result = await userModel.findOne({_id: req.user.id})
+    await userModel.deleteOne({_id: req.user.id});
+    if (result.length !== {}) {
+      console.log('user deleted')
       res.status(200).json({message: `Successfully deleted ${req.user.name} account.`});
     } else {
+      console.log('no user found')
       res.status(400).json({message: `This user doesn't exist`});
     }
   } catch(error) {
