@@ -7,7 +7,7 @@ const NewPost = () => {
     // const navigate = useNavigate();
 
     const [descrValue, setdescrValue] = useState();
-    const [postData, setPostData] = useState({author: "", authorPic: "", img: "", description: "", date:"", likeCount: 0})
+    // const [postData, setPostData] = useState({author: "", authorPic: "", img: "", description: "", date:"", likeCount: 0})
 
 
     const createPost = (event) => {
@@ -22,7 +22,7 @@ const NewPost = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                setPostData({author: data.author, authorPic: data.authorPic, img: data.img, description: data.description, date:data.date, likeCount: data.likeCount})
+                // setPostData({author: data.author, authorPic: data.authorPic, img: data.img, description: data.description, date:data.date, likeCount: data.likeCount})
             })
             setdescrValue("")
             .catch(error => console.log(error))
@@ -34,7 +34,7 @@ const NewPost = () => {
 
     return (
         <>
-        <h1>Register</h1>
+        <h1>New post</h1>
             
                 <div>
                     <label for="description">Description</label>

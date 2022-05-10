@@ -1,6 +1,7 @@
 
-const PostTile = () => {
+const PostTile = ({item}) => {
 
+    
     return (
         <div className="PostTile"> 
             <div>
