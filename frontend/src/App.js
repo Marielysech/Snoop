@@ -6,6 +6,7 @@ import Auth from './pages/Auth';
 import Register from './components/Register';
 import Home from './pages/Home';
 import AuthContextProvider from './contexts/AuthContext';
+import UpdateUser from './components/UpdateUser';
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
           <Route path="/auth/*" element={<Auth />} >
                     <Route path="login" element={<Login/>} />
                     <Route path="register" element={<Register/>} />
-                    <Route path="logout" />
+                    <Route path="update" element={<UpdateUser />}/>
           </Route>          
           {/* <Route path='' element={ <ComponentToDisplay />} />
           <Route path='' element={ <ComponentToDisplay />} /> */}

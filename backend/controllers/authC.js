@@ -103,17 +103,14 @@ async function updateUser (req,res) {
     let userID = req.user._id
 
     let newUserInfo = {
-        name: req.body.name,
-        userName: req.body.userName,
-        email: req.body.email,
-        password: hashedPassword,
+        name: req.body.name || req.user.name,
+        userName: req.body.userName || req.user.userName,
+        email: req.body.email || req.user.email,
+        password: hashedPassword || req.user.hashedPassword,
         // picture: req.body.picture 
     }
     
-    // FOR LOOP FOR THE OBJECT TO TRY
-    // for (const key in newUserInfo) {
-    //     newUserInfo[key] && await userModel.updateOne({_id: user.id}, {key: newUserInfo[key]})
-    // }
+   
 
     try {
     newUserInfo.name && await userModel.updateOne({_id: userID}, {name: newUserInfo.name}) //update name
@@ -121,11 +118,15 @@ async function updateUser (req,res) {
     newUserInfo.email && await userModel.updateOne({_id: userID}, {email: newUserInfo.email}) //update email
     newUserInfo.password && await userModel.updateOne({_id: userID}, {password: newUserInfo.password}) //update password
 
+
+
+    const modifiedUser = await userModel.findOne({name: newUserInfo.name})
+    console.log(modifiedUser)
     return res.status(200).json({
         message: "User information updated",
-        email: user.email,
-        name: user.name,
-        userName: user.userName,
+        email: newUserInfo.email,
+        name: newUserInfo.name,
+        userName: newUserInfo.userName,
         // picture: user.picture
      });
     } catch(error) {

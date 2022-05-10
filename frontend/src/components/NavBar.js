@@ -12,6 +12,8 @@ const NavBar = () => {
           <NavLink  to="/auth/register">Register</NavLink>
           <Logout />  
           <DeleteUser />
+          <NavLink  to="/auth/update">update</NavLink>
+
 
           <h1>This is the NavBar</h1>
 
