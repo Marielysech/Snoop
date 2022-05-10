@@ -6,6 +6,7 @@ const userModel = require('../models/User')
 
 
 function initialize(passport) {
+
     const customFields = {
       usernameField: "email",
       passwordField: "password"
@@ -36,10 +37,13 @@ passport.use(new LocalStrategy(customFields, authenticateUser))
 
 
 passport.serializeUser((user, done) => {
-  return done(null, user.id)
+  console.log('serialize fct ' + user)
+  return done(null, user._id)
 })
-passport.deserializeUser(async (id, done) => {
-  const user = await userModel.findOne({_id: id});
+passport.deserializeUser(async (_id, done) => {
+  const user = await userModel.findOne({_id: _id});
+  console.log('deserialize fct ' + user)
+
   return done(null, user)
 })
 

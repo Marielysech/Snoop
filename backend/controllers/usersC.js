@@ -1,6 +1,5 @@
 const userModel = require('../models/User')
 const postModel = require('../models/Post')
-const { use } = require('../routes/posts')
 
 
 async function getFollowedPosts (req,res) {

@@ -11,11 +11,9 @@ router.post('/login', authController.loginUser);
 
 router.get('/logout', authController.logoutUser);
 
-router.post('/delete', authController.deleteUser);
+router.get('/delete', authController.deleteUser);
 
 router.post('/update', authController.updateUser);
-
-// do I need this ?? router.get("/getuser", authController.getUser);
 
 
 

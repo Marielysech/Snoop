@@ -14,26 +14,19 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// routes
-// const usersRoute = require('./routes/users')
+// routes imporation
+const usersRoute = require('./routes/users')
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
 
 
-app.use('/', express.static('./public'))
-app.use("/auth", authRoute);
-// app.use("/users", usersRoute);
-app.use("/posts", postRoute);
-
-
 
 // passport configuration
-app.use(passport.initialize())
 
 const sessionStore = new MongoStore({
   mongoUrl: process.env.DB_SERVER,
   collection: "sessions",
-});
+}); 
 
 app.use(session({
   secret: process.env.SESSION_KEY,
@@ -49,17 +42,22 @@ app.use(session({
   },
 }))
 
+app.use(passport.initialize())
+
+
 app.use(passport.session())
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
 
 // database connexion
 mongoose.connect(process.env.DB_SERVER)
 .then(() => console.log("Connected to DB server"))
 .catch((err) => console.log(err));
+
+//Routes
+app.use('/', express.static('./public'))
+app.use("/auth", authRoute);
+app.use("/users", usersRoute);
+app.use("/posts", postRoute);
 
 
 // CORS setup
@@ -83,11 +81,16 @@ app.use(
 );
 
 app.set("trust proxy", 1);
+ 
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
 
 // server setup
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, process.env.PORTNAME, (err) => {
     if (err) console.log(err);

@@ -57,25 +57,29 @@ async function loginUser (req, res, next) {
     };
 
 async function logoutUser (req, res) {
-    req.logOut() 
-    res.clearCookie("connect.sid", { path: "/" });
+    try {
+      req.logOut() 
+      res.clearCookie("connect.sid", { path: "/" });
 
-    req.session.destroy(function (err) {
-        if (err) {
-        return next(err);
-        }
-        console.log('user is disconnected')
-        res.status(200).json({message:"You've been logged out"});
-    });
-    
+      req.session.destroy(function (err) {
+          if (err) {
+          return next(err);
+          }
+          console.log('user is disconnected')
+          res.status(200).json({message:"You've been logged out"});
+      });
+    } catch(error) {
+      console.log(error)
+  }
 }
 
 async function deleteUser (req,res) {
 //change req.body.email for _id: req.user._id
   try {
-    const result = await userModel.deleteOne({email: req.body.email});
+    console.log(req.user)
+    const result = await userModel.deleteOne({name: req.user.name});
     if (result.deletedCount === 1) {
-      res.status(200).json({message: `Successfully deleted ${req.body.email} account.`});
+      res.status(200).json({message: `Successfully deleted ${req.user.name} account.`});
     } else {
       res.status(400).json({message: `This user doesn't exist`});
     }
