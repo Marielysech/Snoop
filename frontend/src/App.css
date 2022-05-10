@@ -1,1 +1,31 @@
+.navBar {
+    display: grid;
 
+}
+
+.PostTile {
+border: 3px solid black;
+width: 50%;
+margin: 0 auto;
+}
+
+.PostTile div {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.profilePic {
+    max-width: 100%;
+    width: 10%;
+    border-radius: 50%;
+}
+
+.publishedImg {
+    max-width: 100%;
+    width: 100%;   
+}
+
+.likeC {
+    margin-left: -97%;
+}

@@ -1,6 +1,10 @@
 const userModel = require('../models/User')
 const postModel = require('../models/Post')
+const passport = require('passport')
+const initialize = require('../config/passport-config')
 
+
+initialize(passport);
 
 async function getAllPosts(req,res) {
     try {
@@ -21,12 +25,23 @@ async function createPost(req,res) {
         author: req.user._id,
         content: {
             // TO DO - HOW TO UPLOAD IMG 
-            image: req.body.imageURL,
+            // image: req.body.imageURL,
             text: req.body.description
          }        
     })
         console.log(post)
-        return res.status(200).json({message: `new post create at ${post.date}`});
+    const newPost = await postModel.findOne({_id: post._id}).populate("author")
+    const likeCount = newPost.like.length || 0
+
+        return res.status(200).json({
+            message: `new post create at ${post.date}`,
+            author: newPost.author.userName,
+            authorPic: newPost.author.picture || "https://media-exp1.licdn.com/dms/image/C5603AQEeNp-zoW3yCA/profile-displayphoto-shrink_800_800/0/1648060969196?e=1657756800&v=beta&t=BtbM2gqat69TLd14Qwp6bBPFBkFW-2IvcIp505KoZNw",
+            img: newPost.content.image || "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg",
+            description: newPost.content.text ,
+            date: newPost.date,
+            likeCount: likeCount,
+        });
     
     } catch(error) {
         console.log(error)

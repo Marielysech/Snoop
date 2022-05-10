@@ -6,7 +6,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 const postSchema = new mongoose.Schema({
     date:{type: String, default: moment().calendar()},
 
-    author:{ type: mongoose.Schema.Types.ObjectId, ref: "User", default : [] },
+    author:{ type: mongoose.Schema.Types.ObjectId, ref: "User", default : {} },
 
     content:{
         image: {type: String}, //check how to define image

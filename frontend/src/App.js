@@ -7,6 +7,7 @@ import Register from './components/Register';
 import Home from './pages/Home';
 import AuthContextProvider from './contexts/AuthContext';
 import UpdateUser from './components/UpdateUser';
+import NewPost from './pages/NewPost';
 
 function App() {
 
@@ -24,8 +25,8 @@ function App() {
                     <Route path="register" element={<Register/>} />
                     <Route path="update" element={<UpdateUser />}/>
           </Route>          
-          {/* <Route path='' element={ <ComponentToDisplay />} />
-          <Route path='' element={ <ComponentToDisplay />} /> */}
+          <Route path="/posts/new" element={ <NewPost />} />
+          {/* <Route path='' element={ <ComponentToDisplay />} /> */}
         </Routes>
         </main>
       </AuthContextProvider>
