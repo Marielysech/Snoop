@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {useParams } from "react-router-dom"
+import {NavLink, useParams } from "react-router-dom"
 import NavBar from "../components/NavBar"
 import PostContainer from "../components/PostsContainer";
 import SearchBar from "../components/Searchbar"
@@ -31,10 +31,17 @@ return (
     <div>
         <NavBar />
         <SearchBar />
-        <h1>This is the Profile page</h1>
         <PostContainer fetchUrl={`/users/${userName}`}>
             <h1>This is the profile</h1>
-            <button className={isfollowed} onClick={followUser}>{isfollowed}</button>
+            <div className="introUser">    
+                <img className="profilePic" src="https://media-exp1.licdn.com/dms/image/C5603AQEeNp-zoW3yCA/profile-displayphoto-shrink_800_800/0/1648060969196?e=1657756800&v=beta&t=BtbM2gqat69TLd14Qwp6bBPFBkFW-2IvcIp505KoZNw"/> 
+                <div>
+                    <h5>@userName</h5> 
+                    <button className={isfollowed} onClick={followUser}>{isfollowed}</button>
+                </div>
+                <NavLink to="/auth/update"><i className="fa-solid fa-gear fa-xl"></i></NavLink>
+            </div>
+            <h2>POST HISTRY</h2>
         </PostContainer>
         
     </div>

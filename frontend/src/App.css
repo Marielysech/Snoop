@@ -45,6 +45,7 @@ margin: 0 auto;
 .Follow {
     background-color: white;
     color: rgba(0, 0, 255, 0.531);
+   
 }
 
 .Followed {
@@ -52,7 +53,22 @@ margin: 0 auto;
     color: white;
 }
 
+.Followed:hover,
+.Follow:hover {
+    cursor: pointer;
+}
+
 .liked {
     color: red;
     background-color: pink;
+}
+
+.introUser {
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid black;
+}
+
+button:hover {
+    cursor: pointer;
 }

@@ -38,10 +38,11 @@ return (
 
         {isSearched ? 
         <div className="userList">
-            {refinedSearch.map((item, index) => 
+            {refinedSearch.map((item, index) => <div key={index}>
             <NavLink to={`/users/${item.userName}`}>
-                <h1 key={index}>{item.userName}</h1>
-            </NavLink>)}
+                <h1>{item.userName}</h1>
+            </NavLink>
+            </div>)}
         </div> : null}
             
 
