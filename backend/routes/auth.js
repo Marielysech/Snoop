@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authC')
-// const authorization = require("../middleware/authorization")
+const authorization = require("../middleware/authorization")
 
 //TODO : add authorization for limited access
 
-router.post('/register', authController.registerNewUser);
+router.post('/register', authorization.checkNotAuthenticated, authController.registerNewUser);
 
-router.post('/login', authController.loginUser);
+router.post('/login', authorization.checkNotAuthenticated, authController.loginUser);
 
-router.get('/logout', authController.logoutUser);
+router.get('/logout', authorization.checkAuthenticated, authController.logoutUser);
 
-router.get('/delete', authController.deleteUser);
+router.get('/delete', authorization.checkAuthenticated, authController.deleteUser);
 
-router.post('/update', authController.updateUser);
+router.post('/update', authorization.checkAuthenticated, authController.updateUser);
 
 
 

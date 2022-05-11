@@ -9,11 +9,11 @@ import UpdateUser from './components/UpdateUser';
 import NewPost from './pages/NewPost';
 import PostContainer from './components/PostsContainer';
 import UserProfile from './pages/Profile';
+import RequireAuth from './contexts/RequireAuth';
+
 
 function App() {
 
- 
-  let { userName } = useParams();
 
 
   return (
@@ -21,20 +21,20 @@ function App() {
       <AuthContextProvider>
         <main>
         <Routes>
-          <Route path='/' element={ <Home />} >
-              <Route path="explore" element={<PostContainer fetchUrl={("/posts/")}/>} />
-              <Route path="feed" element={<PostContainer fetchUrl={("/users/feed")}/>} />
+          <Route path='/' element={ <RequireAuth> <Home /> </RequireAuth>} >
+              <Route path="explore" element={<RequireAuth> <PostContainer fetchUrl={("/posts/")}/></RequireAuth>} />
+              <Route path="feed" element={<RequireAuth><PostContainer fetchUrl={("/users/feed")}/> </RequireAuth>} />
           </Route>
 
           <Route path="/auth/*" element={<Auth />} >
                     <Route path="login" element={<Login/>} />
                     <Route path="register" element={<Register/>} />
-                    <Route path="update" element={<UpdateUser />}/>
+                    <Route path="update" element={<RequireAuth><UpdateUser /></RequireAuth>}/>
           </Route> 
 
-          <Route path="/posts/new" element={ <NewPost />} />
+          <Route path="/posts/new" element={<RequireAuth> <NewPost /></RequireAuth>} />
           
-          <Route path="/users/:userName" element={<UserProfile/>} />
+          <Route path="/users/:userName" element={<RequireAuth><UserProfile/></RequireAuth>} />
 
 
           {/* <Route path='' element={ <ComponentToDisplay />} /> */}
