@@ -1,5 +1,5 @@
 import './App.css';
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, useParams} from 'react-router-dom'
 import Login from './components/Login';
 import Auth from './pages/Auth';
 import Register from './components/Register';
@@ -13,6 +13,7 @@ import UserProfile from './pages/Profile';
 function App() {
 
  
+  let { userName } = useParams();
 
 
   return (

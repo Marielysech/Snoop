@@ -15,6 +15,7 @@ function SearchBar() {
 
     const searchUser = (e) => {
 
+
         searchValue.length < 1 ? setIsSearched(false) : setIsSearched(true)
         
         const usersMatch = userList.filter(item => item.userName.includes(e.target.value))
@@ -38,7 +39,7 @@ return (
         {isSearched ? 
         <div className="userList">
             {refinedSearch.map((item, index) => 
-            <NavLink to={`/users/${item.username}`}>
+            <NavLink to={`/users/${item.userName}`}>
                 <h1 key={index}>{item.userName}</h1>
             </NavLink>)}
         </div> : null}

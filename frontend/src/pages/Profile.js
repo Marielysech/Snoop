@@ -4,9 +4,11 @@ import PostContainer from "../components/PostsContainer";
 import SearchBar from "../components/Searchbar"
 
 const UserProfile = () => {
-    const params = useParams();
+    const {userName} = useParams();
     let arr = []
-    const userPost = arr.filter(item => item.userName === params.userName) 
+    const userPost = arr.filter(item => item.userName === userName.userName) 
+
+    console.log(`/users/${userName}`)
 
 
 return (    
@@ -14,7 +16,7 @@ return (
         <NavBar />
         <SearchBar />
         <h1>This is the Profile page</h1>
-        <PostContainer fetchUrl={`/users/${params}`}/>
+        <PostContainer fetchUrl={`/users/${userName}`}/>
         
     </div>
     )
