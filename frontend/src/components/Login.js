@@ -1,5 +1,5 @@
 import React, {useStatem, useContext, useState} from 'react'
-import {useNavigate} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
 import NavBar from './NavBar';
 
@@ -56,6 +56,8 @@ const Login = () => {
         </div>
         <button type="submit" onClick={loginUser}>Login</button>
         </form>
+        <NavLink  to="/auth/register">Register</NavLink>
+
         </>
     )
 }

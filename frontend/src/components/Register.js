@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useNavigate, } from 'react-router-dom';
+import {NavLink, useNavigate, } from 'react-router-dom';
 import NavBar from './NavBar';
 
 
@@ -39,7 +39,7 @@ const Register = () => {
     return (
         <>
         <NavBar />
-        <h1>Register</h1>
+        <h1>Register component</h1>
             
                 <div>
                     <label for="name">Name</label>
@@ -60,6 +60,8 @@ const Register = () => {
         
 
             <button type="submit" onClick={registerUser}>Register</button>
+            <NavLink  to="/auth/login">login</NavLink>
+
             
         </>
     )
