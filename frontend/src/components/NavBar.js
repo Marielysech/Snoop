@@ -15,6 +15,13 @@ const NavBar = () => {
           <DeleteUser />
           <NavLink  to="/auth/update">update</NavLink>
           <NavLink  to="/posts/new">newPost</NavLink>
+          <div className='blue'>
+          <NavLink  to="/feed">home</NavLink>
+          <NavLink  to="/">Profile</NavLink>
+          <NavLink  to="/explore">explore</NavLink>
+          </div>
+
+
 
 
 

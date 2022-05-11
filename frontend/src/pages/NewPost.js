@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useNavigate, } from 'react-router-dom';
-
+import NavBar from '../components/NavBar'
 
 
 const NewPost = () => {
@@ -34,6 +34,7 @@ const NewPost = () => {
 
     return (
         <>
+        <NavBar />
         <h1>New post</h1>
             
                 <div>

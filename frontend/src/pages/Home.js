@@ -1,5 +1,6 @@
+import { Outlet } from "react-router-dom"
 import NavBar from "../components/NavBar"
-import PostContainer from "../components/PostsContainer"
+import SearchBar from "../components/Searchbar"
 
 const Home = () => {
 
@@ -7,8 +8,9 @@ const Home = () => {
 return (    
     <div>
         <NavBar />
+        <SearchBar />
         <h1>This is the home page</h1>
-        <PostContainer />
+        <Outlet />
     </div>
     )
 

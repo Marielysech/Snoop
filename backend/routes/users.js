@@ -7,6 +7,7 @@ const userController = require('../controllers/usersC')
 
 
 router.get('/feed', userController.getFollowedPosts);
+router.get('/search', userController.searchUser);
 
 router.route('/:userName')
     .get(userController.getUserPosts)

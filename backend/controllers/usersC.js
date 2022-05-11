@@ -1,5 +1,6 @@
 const userModel = require('../models/User')
-const postModel = require('../models/Post')
+const postModel = require('../models/Post');
+const { all } = require('../server');
 
 
 async function getFollowedPosts (req,res) {
@@ -18,13 +19,11 @@ async function getFollowedPosts (req,res) {
     followedUsersArray.map(elem => followedPosts.push(elem.posts)) //elem.post must be an object of post   
     console.log(followedPosts)
 
-    res.status(200).json({feedPosts: followedPosts})
-
+    followedPosts.length > 0 ? res.status(200).json({message: "Fetch successfull", allPosts: followedPosts}) : res.status(200).json({message: "no post availaible"})
     } catch(error) {
         console.log(error)
     }   
 
-    //TODO in front: condition that if feedPost.lenght < 1 : "you don't have any post in your feed, go to explore -> add link to explore page"
 }
 
 async function  getUserPosts (req,res) {
@@ -32,7 +31,9 @@ async function  getUserPosts (req,res) {
     try {
 
     const user = await userModel.find({userName: req.params.userName}).populate("posts")
-    res.status(200).json({userPosts: user.posts})
+    console.log(user.posts)
+    const userPosts = user.posts
+    userPosts.length > 0 || user ? res.status(200).json({message: "user post retreived", allPosts: user.posts}) : res.status(200).json({message: `no existing post for ${user.userName} yet`})
 
     } catch(error) {
         console.log(error)
@@ -107,7 +108,18 @@ async function  likePost(req,res) {
             }
 }
 
+async function searchUser(req,res) {
+    try {
+        const allUsers = await userModel.find({}) 
+    
+        allUsers.length > 0 ? res.status(200).json({message: "all users retreived", allPosts: allUsers}) : res.status(200).json({message: "no existing users yet"})
+    
+        } catch(error) {
+            console.log(error)
+        }   
+}
 
 
 
-module.exports = { followUser, getUserPosts, getuserFavorites, likePost, getFollowedPosts}
+
+module.exports = { followUser, getUserPosts, getuserFavorites, likePost, getFollowedPosts, searchUser}

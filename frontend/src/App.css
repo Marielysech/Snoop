@@ -29,3 +29,15 @@ margin: 0 auto;
 .likeC {
     margin-left: -97%;
 }
+
+.blue a{
+    display: flex;
+    color: green;
+    font-weight: bold; 
+}
+
+
+.userList {
+    font-size: small;
+    color: blueviolet
+}

@@ -1,37 +1,33 @@
 import PostTile from "./PostTile"
-import React, {useState, useEffect, useRef} from 'react'
-import {BrowserRouter as Router, Routes, Route, NavLink} from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import {NavLink} from 'react-router-dom'
+import useFetchRequest from '../helper/fetch'
 
-const PostContainer = () => {
+const PostContainer = ({fetchUrl}) => {
 
-    const defaultUser = {name:"Stranger", email: "stranger@gmail.com"}
-
-    const [postsFollowedList, setPostsFollowedList] = useState([])
-    const [initialML, setInitialML] = useState([])
-    const [userInfo, setUserInfo] = useState(defaultUser)
-    // console.log(userInfo.name)
-   
-    function getAllFollowedPosts() {
-      fetch('/')
-      .then(response => response.json())
-      .then(data => {
-          console.log(data)
-          data.allPost && setPostsFollowedList(data.allPosts)
-      })
-      .catch(err => console.log(err))
+    const { error, isLoaded, postsList } = useFetchRequest(fetchUrl)
     
-  }
-  
-  useEffect( () => {getAllFollowedPosts()}, [])
-    return (
-        <div className="allFollowedPosts">
-            {postsFollowedList.length > 0 ? 
-            postsFollowedList.map(item => <PostTile item={item}/> ) : 
+    if (error !== null) {
+        return <div>Error: {error.message}</div>;
+      }
+
+    if (postsList.length < 1) {
+        return (
             <div> 
-                <p>No post yet</p>
+                <p>No post yet</p> 
                 <NavLink to="/explore">Explore</NavLink>
             </div>
-            }
+
+        )
+    }
+
+    // if (!isLoaded) {
+    // return <div>Loading...</div>;
+    // }
+
+    return (
+        <div className="allFollowedPosts">
+            {postsList.map((item, index) => <PostTile item={item} index={index}/> )}
         </div>
   
         
