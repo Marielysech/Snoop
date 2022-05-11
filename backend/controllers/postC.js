@@ -31,6 +31,9 @@ async function createPost(req,res) {
     })
         console.log(post)
     const newPost = await postModel.findOne({_id: post._id}).populate("author")
+    await userModel.updateOne({_id: req.user._id}, { $push: { posts: post._id }})
+    // const user = await userModel.findOne({_id: req.user._id})
+    // console.log(user)
     const likeCount = newPost.like.length || 0
 
         return res.status(200).json({
@@ -51,7 +54,6 @@ async function createPost(req,res) {
 async function deletePost(req,res) {
     const postID = req.params.postID
     
-
     const result = await postModel.deleteOne({_id: postID})
 
     if (result.deletedCount === 1) {

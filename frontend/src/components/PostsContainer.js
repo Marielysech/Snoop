@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import {NavLink} from 'react-router-dom'
 import useFetchRequest from '../helper/fetch'
 
-const PostContainer = ({fetchUrl}) => {
+const PostContainer = ({fetchUrl, children}) => {
 
     const { error, isLoaded, postsList } = useFetchRequest(fetchUrl)
     
@@ -27,7 +27,8 @@ const PostContainer = ({fetchUrl}) => {
 
     return (
         <div className="allFollowedPosts">
-            {postsList.map((item, index) => <PostTile item={item} index={index}/> )}
+            {children}
+            {postsList.map((item, index) => <div key={index}><PostTile item={item}/></div> )}
         </div>
   
         

@@ -1,4 +1,5 @@
 import React, {useStatem, useContext, useState} from 'react'
+import {useNavigate} from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
 import NavBar from './NavBar';
 
@@ -6,7 +7,7 @@ const Login = () => {
 
     const {userInfo, setUserInfo} = useAuthContext() //auth.userInfo and auth.setUserInfo
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [emailValue, setemailValue] = useState();
     const [passwordValue, setpasswordValue] = useState();
 
@@ -32,7 +33,7 @@ const Login = () => {
             console.log(data)
             setUserInfo({name: data.name, userName: data.userName, email: data.email})
             resetValues()
-            // navigate('/', {replace:true})
+            navigate('/feed', {replace:true})
         })
         .catch(error => console.log(error))
 

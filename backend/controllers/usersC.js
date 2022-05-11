@@ -1,6 +1,5 @@
 const userModel = require('../models/User')
 const postModel = require('../models/Post');
-const { all } = require('../server');
 
 
 async function getFollowedPosts (req,res) {
@@ -30,37 +29,40 @@ async function  getUserPosts (req,res) {
 
     try {
 
-    const user = await userModel.find({userName: req.params.userName}).populate("posts")
-    console.log(user.posts)
-    const userPosts = user.posts
-    userPosts.length > 0 || user ? res.status(200).json({message: "user post retreived", allPosts: user.posts}) : res.status(200).json({message: `no existing post for ${user.userName} yet`})
+    const user = await userModel.findOne({userName: req.params.userName}).populate("posts")
+    console.log("this the users post to display " + user.posts)
+
+    user.posts.length > 0 ? res.status(200).json({message: "user post retreived", allPosts: user.posts}) : res.status(200).json({message: `no existing post for ${user.userName} yet`})
 
     } catch(error) {
         console.log(error)
     }   
 }
 
+//TODO
 async function  followUser(req,res) {
     try {
         const userToFollow = await userModel.findOne({userName: req.params.userName})  //object with user to follow info, push its ID to 
         console.log(userToFollow)
 
-        const activeUser = await userModel.findOne({_id: req.user._id})
-        console.log(activeUser)
+        // const activeUser = await userModel.findOne({_id: req.user._id})
+        // console.log(activeUser)
+        const isUserFollowed = await userModel.findOne({_id : req.user._id, "userAction.followedUsers": userToFollow._id})
 
-        const isUserFollowed = activeUser.userAction.followedUsers.filter(elem => elem === userToFollow._id )
         console.log(isUserFollowed)
+        // const isUserFollowed = activeUser.userAction.followedUsers.filter(elem => elem === userToFollow._id )
+        // console.log(isUserFollowed)
 
-        if(isUserFollowed.length < 1) {
+        if(!isUserFollowed) {
             await userModel.updateOne({_id: req.user._id}, {  $push: {
                 "userAction.followedUsers": userToFollow._id}})
-            console.log(req.params.userName + 'unfollowed')
-            return res.status(200).json({message : `${userToFollow.userName} followed`})
+            console.log(req.params.userName + 'followed')
+            return res.status(200).json({user: `${userToFollow.userName}`, message :  "followed"})
         }
             await userModel.updateOne({_id: req.user._id}, {  $pull: {
                 "userAction.followedUsers": userToFollow._id}})
             console.log(req.params.userName + 'unfollowed')
-            return res.status(200).json({message : `${userToFollow.userName} unfollowed`})
+            return res.status(200).json({user: `${userToFollow.userName}`, message :  "unfollowed"})
 
         } catch (err) {
             console.log(err)
@@ -68,7 +70,7 @@ async function  followUser(req,res) {
 
 }
 
-
+//TODO
 async function  getuserFavorites(req,res) {
     try {
         let userID = req.user._id;
@@ -85,23 +87,22 @@ async function  getuserFavorites(req,res) {
         }   
 }
 
+//TODO
 async function  likePost(req,res) {
     try {
-    
-        const userData = await userModel.find({_id : req.user._id})
+        // console.log(req.user._id)
+        const isLiked = await userModel.findOne({_id : req.user._id, "userAction.favPosts": req.params.id})
 
-        const isLiked = userData.userAction.favPosts.filter(elem => elem === req.params.id)
-
-        if (isLiked.length < 1) {
+        if (!isLiked) {
             await userModel.updateOne({_id: req.user._id}, {  $push: { "userAction.favPosts": req.params.id}})
             await postModel.updateOne({_id: req.params.id}, {  $push: { like: req.user._id}})
-            res.status(200).json({message: "post liked"})
+           return res.status(200).json({message: "post liked"})
 
         }
         
             await userModel.updateOne({_id: req.user._id}, {  $pull: { "userAction.favPosts": req.params.id}}) 
             await postModel.updateOne({_id: req.params.id}, {  $pull: { like: req.user._id}})
-            res.status(200).json({message: "post unliked"})
+            return res.status(200).json({message: "post unliked"})
 
         } catch (err) {
             console.log(err)

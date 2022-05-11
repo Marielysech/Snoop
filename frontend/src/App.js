@@ -25,12 +25,15 @@ function App() {
               <Route path="explore" element={<PostContainer fetchUrl={("/posts/")}/>} />
               <Route path="feed" element={<PostContainer fetchUrl={("/users/feed")}/>} />
           </Route>
+
           <Route path="/auth/*" element={<Auth />} >
                     <Route path="login" element={<Login/>} />
                     <Route path="register" element={<Register/>} />
                     <Route path="update" element={<UpdateUser />}/>
-          </Route>          
+          </Route> 
+
           <Route path="/posts/new" element={ <NewPost />} />
+          
           <Route path="/users/:userName" element={<UserProfile/>} />
 
 
