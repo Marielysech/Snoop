@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
 
     password:{ type: String, required: true, minlength: 6},
 
-    picture:{type: String},
+    picture:{type: String, required: true},
 
     userAction: {
         followedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default : [] }],

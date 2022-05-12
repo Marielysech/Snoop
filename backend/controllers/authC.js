@@ -23,6 +23,7 @@ async function registerNewUser (req, res) {
             
             const user = await userModel.create({
                 //TODO : add profile picture creation
+                picture: req.file.path,
                 name: req.body.name,
                 userName: req.body.userName,
                 email: req.body.email,
