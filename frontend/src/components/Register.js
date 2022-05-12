@@ -6,7 +6,7 @@ import axios from 'axios'
 
 
 const Register = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const [nameValue, setnameValue] = useState("");
     const [emailValue, setemailValue] = useState("");
@@ -46,14 +46,14 @@ const Register = () => {
 
             axios(requestOptions)
                 .then((res) => {
-                    console.log("ok", res)
+                    console.log("ok", res.data)
                     resetValues()
                 })
                 .catch((error) => {
                     console.log( error.response )
                 })
 
-
+                navigate('/auth/login', {replace : true})
         //   fetch('/auth/register', requestOptions)
         //   .then(res => res.json())
         //   .then(data => console.log(data))
