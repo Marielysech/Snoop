@@ -1,6 +1,5 @@
 import './App.css';
 import {Routes, Route, useParams} from 'react-router-dom'
-import Login from './components/Login';
 import Auth from './pages/Auth';
 import Register from './components/Register';
 import Home from './pages/Home';
@@ -10,7 +9,9 @@ import NewPost from './pages/NewPost';
 import PostContainer from './components/PostsContainer';
 import UserProfile from './pages/Profile';
 import RequireAuth from './contexts/RequireAuth';
-
+import CssBaseline from '@mui/material/CssBaseline';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
 
   return (
     <div className="App">
+      <CssBaseline />
       <AuthContextProvider>
         <main>
         <Routes>
@@ -28,7 +30,7 @@ function App() {
 
           <Route path="/auth/*" element={<Auth />} >
                     <Route path="login" element={<Login/>} />
-                    <Route path="register" element={<Register/>} />
+                    <Route path="register" element={<SignUp/>} />
                     <Route path="update" element={<RequireAuth><UpdateUser /></RequireAuth>}/>
           </Route> 
 

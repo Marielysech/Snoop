@@ -6,10 +6,11 @@ const Auth = () => {
 
     return (
         <>
-            <h1>This is the Auth page</h1>
-            <div className="authContainer">
+            {/* <h1>This is the Auth page</h1>
+            <div className="authContainer"> */}
             <Outlet />
-            </div>
+            {/* <Footer /> */}
+            {/* </div> */}
         </>
     )
 
