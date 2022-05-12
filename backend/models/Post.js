@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
     author:{ type: mongoose.Schema.Types.ObjectId, ref: "User", default : {} },
 
     content:{
-        image: {type: String}, //check how to define image
+        image: {type: String, required: true}, //check how to define image
         text: {type: String}
          },
     

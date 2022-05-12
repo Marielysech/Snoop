@@ -6,6 +6,8 @@ const session = require('express-session')
 const cors = require('cors')
 const MongoStore = require("connect-mongo");
 var createError = require('http-errors');
+const Grid = require("gridfs-stream");
+
 
 
 
@@ -46,16 +48,29 @@ app.use(session({
 
 app.use(passport.session())
 
-// database connexion
-mongoose.connect(process.env.DB_SERVER)
+// MongoDB connexion set up
+
+const paramsMongo = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}
+
+mongoose.connect(process.env.DB_SERVER, paramsMongo)
 .then(() => console.log("Connected to DB server"))
-.catch((err) => console.log(err));
+.catch((err) =>{
+  console.log(err)
+  console.log("could not connect to database")
+});
+
+
 
 //Routes
 app.use('/', express.static('./public'))
+app.use('/uploads', express.static('uploads')) //to store user img files
 app.use("/auth", authRoute);
 app.use("/users", usersRoute);
 app.use("/posts", postRoute);
+
 
 
 // CORS setup

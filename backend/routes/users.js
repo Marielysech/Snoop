@@ -3,9 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/usersC')
 const authorization = require("../middleware/authorization")
 
-//TODO : add authorization for limited access
-
-
+//user routes
 router.get('/feed', authorization.checkAuthenticated, userController.getFollowedPosts);
 router.get('/search', authorization.checkAuthenticated, userController.searchUser);
 
