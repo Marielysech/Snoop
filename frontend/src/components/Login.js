@@ -16,20 +16,9 @@ import LoginIcon from '@mui/icons-material/Login';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Logout from './Logout';
+import Copyright from './Copyright';
 
-//TO DO - check out later Copyright
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const theme = createTheme({
 
@@ -83,10 +72,10 @@ function Login() {
         console.log(data)
         setUserInfo({name: data.name, userName: data.userName, email: data.email})
         resetValues()
-       data.name && navigate('/feed', {replace:true})
+        data.name &&  navigate('/feed', {replace : true})
     })
     .catch(error => console.log(error))
-
+     
 }
 
   return (
@@ -124,6 +113,7 @@ function Login() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LoginIcon />
             </Avatar>
+            <Logout />
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
