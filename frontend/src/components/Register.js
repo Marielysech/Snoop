@@ -1,16 +1,19 @@
 import React, {useState} from 'react'
 import {NavLink, useNavigate, } from 'react-router-dom';
 import NavBar from './NavBar';
+import axios from 'axios'
 
 
 
 const Register = () => {
     // const navigate = useNavigate();
 
-    const [nameValue, setnameValue] = useState();
-    const [emailValue, setemailValue] = useState();
-    const [userNameValue, setUserNameValue] = useState();
-    const [passwordValue, setpasswordValue] = useState();
+    const [nameValue, setnameValue] = useState("");
+    const [emailValue, setemailValue] = useState("");
+    const [userNameValue, setUserNameValue] = useState("");
+    const [passwordValue, setpasswordValue] = useState("");
+    const [image, setImage] = useState("");
+
 
     const resetValues = () => {
         setnameValue("");
@@ -20,18 +23,43 @@ const Register = () => {
     }
 
     const registerUser = (event) => {
+
+        event.preventDefault()
+
+        if( !nameValue || !userNameValue || !emailValue || !passwordValue || !image) {return( alert("Please fill all details"))}
+
+        let formData = new FormData(event.target)
+        formData.append('name', nameValue)
+        formData.append('userName', userNameValue)
+        formData.append('email', emailValue)
+        formData.append('password', passwordValue)
+        formData.append('image', image)
+
+
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: nameValue, userName: userNameValue, email: emailValue, password: passwordValue })
+            url: "/auth/register",
+            headers: { 'Content-Type': 'multipart/form-data' },
+            // body: formData
+            data: formData
           };
-    
-          fetch('/auth/register', requestOptions)
-          .then(res => res.json())
-          .then(data => console.log(data))
-          resetValues()
-          .catch(error => console.log(error))
-          event.preventDefault();
+
+            axios(requestOptions)
+                .then((res) => {
+                    console.log("ok", res)
+                    resetValues()
+                })
+                .catch((error) => {
+                    console.log( error.response )
+                })
+
+
+        //   fetch('/auth/register', requestOptions)
+        //   .then(res => res.json())
+        //   .then(data => console.log(data))
+        //   resetValues()
+        //   .catch(error => console.log(error))
+          
   
 
     }
@@ -40,7 +68,12 @@ const Register = () => {
         <>
         <NavBar />
         <h1>Register component</h1>
-            
+            <form onSubmit={registerUser}>
+                <div>
+                    <label for="image">Choose a profile picture:</label>
+                    <input type="file" name="image" accept="image/png, image/jpeg" value={image} onChange={(e) => setImage(e.target.value)}></input>
+
+                </div>
                 <div>
                     <label for="name">Name</label>
                     <input type="text" placeholder="Enter your name here" value={nameValue} onChange={(e) => setnameValue(e.target.value)}></input>
@@ -59,7 +92,8 @@ const Register = () => {
                 </div>
         
 
-            <button type="submit" onClick={registerUser}>Register</button>
+                <button type="submit">Register</button>
+            </form>
             <NavLink  to="/auth/login">login</NavLink>
 
             

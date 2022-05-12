@@ -19,11 +19,12 @@ async function registerNewUser (req, res) {
     } else {
     
         try {
+   
             const hashedPassword = await bcrypt.hash(req.body.password, 10)
             
             const user = await userModel.create({
                 //TODO : add profile picture creation
-                picture: req.file.path,
+                picture: req.file.filename,
                 name: req.body.name,
                 userName: req.body.userName,
                 email: req.body.email,
@@ -34,6 +35,7 @@ async function registerNewUser (req, res) {
 
         } catch(error) {
             console.log(error)
+            return res.status(false).json({message: error});
         }
     }
 }
