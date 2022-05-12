@@ -1,5 +1,5 @@
 // FUNCTIONNALITY IMPORT
-import React, {useStatem, useContext, useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {NavLink as RouterLink, useNavigate} from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
 // MUI IMPORT
@@ -66,7 +66,7 @@ function Login() {
         setpasswordValue("")
     }   
 
- const loginUser = (event) => {
+    const loginUser = (event) => {
 
     event.preventDefault();
 
@@ -83,7 +83,7 @@ function Login() {
         console.log(data)
         setUserInfo({name: data.name, userName: data.userName, email: data.email})
         resetValues()
-        navigate('/feed', {replace:true})
+       data.name && navigate('/feed', {replace:true})
     })
     .catch(error => console.log(error))
 

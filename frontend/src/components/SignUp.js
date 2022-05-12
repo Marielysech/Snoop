@@ -1,7 +1,6 @@
 // FUNCTIONALITY RELATED IMPORT
 import React, {useState} from 'react'
-import {NavLink as RouterLink, useNavigate, } from 'react-router-dom';
-import NavBar from './NavBar';
+import {NavLink as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 // MUI DESIGN RELATED IMPORT
@@ -24,7 +23,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Marie-Lyse Charrière
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -52,19 +51,21 @@ export default function SignUp() {
         setUserNameValue("")
     }
 
+
     const registerUser = (event) => {
 
         event.preventDefault()
 
         if( !nameValue || !userNameValue || !emailValue || !passwordValue || !image) {return( alert("Please fill all details"))}
 
-        let formData = new FormData(event.target)
+        const formData = new FormData(event.target)
         formData.append('name', nameValue)
         formData.append('userName', userNameValue)
         formData.append('email', emailValue)
         formData.append('password', passwordValue)
         formData.append('image', image)
 
+        console.log(formData)
 
         const requestOptions = {
             method: 'POST',
@@ -78,12 +79,13 @@ export default function SignUp() {
                 .then((res) => {
                     console.log("ok", res.data)
                     resetValues()
+                    res.data &&  navigate('/auth/login', {replace : true})
                 })
                 .catch((error) => {
                     console.log( error.response )
                 })
 
-                navigate('/auth/login', {replace : true})
+               
     }
 
   return (
@@ -104,14 +106,27 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={registerUser} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
                 {/* TODO : create here component for image upload */}
-                <TextField />
                 <TextField
-                  name="name"
                   required
                   fullWidth
-                  id="name"
+                //   label="Name"
+                  type={"file"}
+                  autoFocus
+                  name='image'
+                  placeholder='Upload your profile picture here'
+                  value={image} 
+                  onChange={(e) => setImage(e.target.value)}
+                />
+                </Grid>
+                {/* <Grid item xs={12} sm={6}>
+                    <Typography variant='h5'> Upload here your profile picture</Typography>
+                </Grid> */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
                   label="Name"
                   autoFocus
                   value={nameValue} 
@@ -122,9 +137,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="userName"
                   label="Username"
-                  name="lastName"
                   value={userNameValue} 
                   onChange={(e) => setUserNameValue(e.target.value)}
                 />
@@ -133,9 +146,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="email"
                   label="Email Address"
-                  name="email"
                   autoComplete="email"
                   value={emailValue} 
                   onChange={(e) => setemailValue(e.target.value)}
@@ -145,11 +156,8 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="password"
                   label="Password"
                   type="password"
-                  id="password"
-                  autoComplete="new-password"
                   value={passwordValue} 
                   onChange={(e) => setpasswordValue(e.target.value)}
                 />

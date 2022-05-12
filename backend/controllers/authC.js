@@ -19,8 +19,15 @@ async function registerNewUser (req, res) {
     } else {
     
         try {
-   
-            const hashedPassword = await bcrypt.hash(req.body.password, 10)
+          let formData = req.body
+          console.log(formData)
+          console.log(req.file)
+          console.log(req.file.filename)
+          console.log(req.body.name)
+
+
+          let userPassword = req.body.password.toString()
+            const hashedPassword = await bcrypt.hash(userPassword, 10)
             
             const user = await userModel.create({
                 //TODO : add profile picture creation
@@ -35,7 +42,7 @@ async function registerNewUser (req, res) {
 
         } catch(error) {
             console.log(error)
-            return res.status(false).json({message: error});
+            return res.status(500).json({message: error});
         }
     }
 }

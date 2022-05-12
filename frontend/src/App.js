@@ -1,7 +1,7 @@
 import './App.css';
 import {Routes, Route, useParams} from 'react-router-dom'
 import Auth from './pages/Auth';
-import Register from './components/Register';
+import Register from './oldComponents (before MUI)/Register';
 import Home from './pages/Home';
 import AuthContextProvider from './contexts/AuthContext';
 import UpdateUser from './components/UpdateUser';
