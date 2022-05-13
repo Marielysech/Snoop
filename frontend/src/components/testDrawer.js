@@ -1,4 +1,6 @@
+//FINAL LEFT SIDE MENU COMPONENT - TO RENAME AT THE END
 import React from "react";
+import { useState } from "react";
 
 // components importation
 import SideBarLink from "./SideBarLink";
@@ -21,7 +23,7 @@ const drawerWidth = 240;
 export default function TestDrawer (props) {
     const { window } = props;
 
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

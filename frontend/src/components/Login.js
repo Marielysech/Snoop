@@ -70,7 +70,7 @@ function Login() {
       .then(res =>res.json())
       .then(data => {
         console.log(data)
-        setUserInfo({name: data.name, userName: data.userName, email: data.email})
+        setUserInfo({name: data.name, userName: data.userName, email: data.email, profilePic: data.picture})
         resetValues()
         data.name &&  navigate('/feed', {replace : true})
     })

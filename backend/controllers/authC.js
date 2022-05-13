@@ -31,7 +31,7 @@ async function registerNewUser (req, res) {
             
             const user = await userModel.create({
                 //TODO : add profile picture creation
-                picture: req.file.filename,
+                picture: req.file.filename.replace(/\s/g, ""),
                 name: req.body.name,
                 userName: req.body.userName,
                 email: req.body.email,
@@ -62,7 +62,7 @@ async function loginUser (req, res, next) {
                 email: user.email,
                 name: user.name,
                 userName: user.userName,
-                // picture: user.picture
+                picture: user.picture
              });
           });
         }

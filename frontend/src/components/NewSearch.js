@@ -5,9 +5,13 @@ import { NavLink } from "react-router-dom"
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import { Drawer } from "@mui/material";
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/ListItem';
 
 // import Search from "@mui/icons-material/Search"
 
+const drawerWidth = 240;
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -51,23 +55,44 @@ const Search = styled('div')(({ theme }) => ({
   
 function NewSearch() {
 
+
     const [searchValue, setSearchValue] = useState("") 
+
     //TODO Loader for user list   
     const { error, isLoaded, postsList: userList } = useFetchRequest("/users/search")
+
     //To display or not the users
     const [isSearched, setIsSearched] = useState(false) 
     const [refinedSearch, setRefinedSearch] = useState([])   
 
 
     const searchUser = (e) => {
-
-
-        searchValue.length < 1 ? setIsSearched(false) : setIsSearched(true)
+        searchValue.length < 2 ? setIsSearched(false) : setIsSearched(true)
         
         const usersMatch = userList.filter(item => item.userName.includes(e.target.value))
-        usersMatch.length > 0 && setRefinedSearch(usersMatch)
-        
+        usersMatch.length > 2 && setRefinedSearch(usersMatch)
+        usersMatch.length < 2 && setRefinedSearch([])
+
     }
+
+    // const allowDrawer = () => {
+    //     setSearchResultOpen(!searchResultOpen)
+    // }
+
+    const container = window !== undefined ? () => window().document.body : undefined;
+    
+    const searchResults = (
+        <div>
+            <List>
+            {refinedSearch.map((item, index) => 
+                <ListItem key={index}>
+                    <NavLink to={`/users/${item.userName}`}>
+                        <h1>{item.userName}</h1>
+                    </NavLink>
+                </ListItem> )}
+            </List>
+        </div>
+    )
 
 return (
     <>  
@@ -76,10 +101,24 @@ return (
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              onChange={(e) => {
+                setSearchValue(e.target.value)
+                searchUser(e)
+            }}
+            //   onClick={(e) => allowDrawer(e)}
+              value={searchValue} 
+              placeholder="Search user"
               inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+            /> 
+             </Search>
+             <Drawer
+                >
+                    {searchResults}
+                </Drawer>
+            
+            
+        
+         
 {/* 
         <form className="searchBar">
              <input 

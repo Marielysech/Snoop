@@ -21,79 +21,29 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import NumbersIcon from '@mui/icons-material/Numbers';
 import Logout from '../components/Logout';
 import TestDrawer from '../components/testDrawer';
+import TopMenu from '../components/TopMenu';
+import { Outlet } from 'react-router-dom';
 
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
-      <List>
-            <ListItem>
-                 <img src="https://cdn-icons-png.flaticon.com/512/1291/1291961.png" alt="Bone" className="logo"/>           
-            </ListItem>
-            <SideBarLink text="Home" Icon={HomeRoundedIcon} route="/feed" />
-            <SideBarLink text="Explore" Icon={NumbersIcon} route="/explore"/>
-            <SideBarLink text="Home" Icon={HomeRoundedIcon} route="/feed" />
-            <ListItem>
-             <Logout />
-            </ListItem>
-        </List>
-    </div>
-  );
-
-  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-        }}
+      <TopMenu />
+      <TestDrawer />
+      {/* HERE IS THE MAIN - PART THAT INCLUDES THE OUTLET */}
+      <Box component="main"
+        sx={{ flexGrow: 1, 
+              p: 3, 
+              width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
-     <TestDrawer />
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-      >
-         
+         <Outlet />
       </Box>
     </Box>
   );
 }
 
-ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
 
 export default ResponsiveDrawer;

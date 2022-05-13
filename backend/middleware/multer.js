@@ -8,7 +8,7 @@ const uniqueId = uuidv4()
 // setting file destination for storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, "../../frontend/public/uploads"));
+        cb(null, path.join(__dirname, "../../backend/uploads"));
     },
     filename: function (req, file, cb) {
       cb(null, uniqueId  + file.originalname);
