@@ -14,7 +14,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import NewHome from './pages/newHome';
 import HomeDrawer from './pages/HomeDrawer';
-import ResponsiveDrawer from './AJETER/responsiveDR';
+import ResponsiveDrawer from './components/responsiveDR';
 
 function App() {
 
@@ -27,19 +27,30 @@ function App() {
         <main>
         <Routes>
           <Route path='/' element={ <RequireAuth> <ResponsiveDrawer /> </RequireAuth>} >
-              <Route path="explore" element={<RequireAuth> <PostContainer fetchUrl={("/posts/")}/></RequireAuth>} />
-              <Route path="feed" element={<RequireAuth><PostContainer fetchUrl={("/users/feed")}/> </RequireAuth>} />
+              <Route path="explore" element={<RequireAuth>    
+                                                <PostContainer fetchUrl={("/posts/")}/>
+                                            </RequireAuth>} />
+              <Route path="feed" element={<RequireAuth>
+                                                  <PostContainer fetchUrl={("/users/feed")}/> 
+                                          </RequireAuth>} />
           </Route>
 
           <Route path="/auth/*" element={<Auth />} >
                     <Route path="login" element={<Login/>} />
                     <Route path="register" element={<SignUp/>} />
-                    <Route path="update" element={<RequireAuth><UpdateUser /></RequireAuth>}/>
+                    <Route path="update" element={<RequireAuth>
+                                                      <UpdateUser />
+                                                  </RequireAuth>}/>
           </Route> 
 
-          <Route path="/posts/new" element={<RequireAuth> <NewPost /></RequireAuth>} />
+          <Route path="/posts/new" element={<RequireAuth>       
+                                                <NewPost />
+                                            </RequireAuth>} />
           
-          <Route path="/users/:userName" element={<RequireAuth><UserProfile/></RequireAuth>} />
+  
+          <Route path="/users/:userName" element={<RequireAuth>
+                                                        <UserProfile/>
+                                                  </RequireAuth>} />
 
 
           {/* <Route path='' element={ <ComponentToDisplay />} /> */}

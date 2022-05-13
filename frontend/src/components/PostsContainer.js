@@ -2,6 +2,7 @@ import PostTile from "./PostTile"
 import React, {useState, useEffect} from 'react'
 import {NavLink} from 'react-router-dom'
 import useFetchRequest from '../helper/fetch'
+import { Grid } from "@mui/material"
 
 const PostContainer = ({fetchUrl, children}) => {
 
@@ -26,10 +27,11 @@ const PostContainer = ({fetchUrl, children}) => {
     // }
 
     return (
-        <div className="allFollowedPosts">
+        <Grid  className="allFollowedPosts">
+       
             {children}
             {postsList.map((item, index) => <div key={index}><PostTile item={item}/></div> )}
-        </div>
+        </Grid>
   
         
     )

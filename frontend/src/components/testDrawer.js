@@ -1,6 +1,8 @@
 //FINAL LEFT SIDE MENU COMPONENT - TO RENAME AT THE END
 import React from "react";
 import { useState } from "react";
+import { useAuthContext } from '../contexts/AuthContext';
+
 
 // components importation
 import SideBarLink from "./SideBarLink";
@@ -15,12 +17,15 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { Divider } from "@mui/material";
 import { Box } from "@mui/material";
-
-
+import PetsIcon from '@mui/icons-material/Pets';
+import HdrWeakIcon from '@mui/icons-material/HdrWeak';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 const drawerWidth = 240;
 
 export default function TestDrawer (props) {
+    const {userInfo} = useAuthContext()
+
     const { window } = props;
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -28,7 +33,7 @@ export default function TestDrawer (props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
+console.log(userInfo.userName)
   // to render it differently on mobile of desktop
   const drawer = (
     <div>
@@ -40,7 +45,10 @@ export default function TestDrawer (props) {
             </ListItem>
             <SideBarLink text="Home" Icon={HomeRoundedIcon} route="/feed" />
             <SideBarLink text="Explore" Icon={NumbersIcon} route="/explore"/>
-            <SideBarLink text="Home" Icon={HomeRoundedIcon} route="/feed" />
+            <SideBarLink text="Profile" Icon={PetsIcon} route={`/users/${userInfo.userName}`} />
+            <SideBarLink text="Settings" Icon={HdrWeakIcon} route="/auth/update" />
+            <SideBarLink text="New post" Icon={AddBoxIcon} route="/posts/new" />
+
             <ListItem>
              <Logout />
             </ListItem>
