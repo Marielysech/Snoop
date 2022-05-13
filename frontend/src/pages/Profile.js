@@ -2,7 +2,7 @@ import { useState } from "react";
 import {NavLink, useParams } from "react-router-dom"
 import NavBar from "../components/NavBar"
 import PostContainer from "../components/PostsContainer";
-import SearchBar from "../components/Searchbar"
+// import SearchBar from "../components/Searchbar"
 
 const UserProfile = () => {
     const {userName} = useParams();
@@ -30,7 +30,7 @@ const UserProfile = () => {
 return (    
     <div>
         <NavBar />
-        <SearchBar />
+        {/* <SearchBar /> */}
         <PostContainer fetchUrl={`/users/${userName}`}>
             <h1>This is the profile</h1>
             <div className="introUser">    

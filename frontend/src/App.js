@@ -12,6 +12,9 @@ import RequireAuth from './contexts/RequireAuth';
 import CssBaseline from '@mui/material/CssBaseline';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import NewHome from './pages/newHome';
+import HomeDrawer from './pages/HomeDrawer';
+import ResponsiveDrawer from './AJETER/responsiveDR';
 
 function App() {
 
@@ -23,7 +26,7 @@ function App() {
       <AuthContextProvider>
         <main>
         <Routes>
-          <Route path='/' element={ <RequireAuth> <Home /> </RequireAuth>} >
+          <Route path='/' element={ <RequireAuth> <ResponsiveDrawer /> </RequireAuth>} >
               <Route path="explore" element={<RequireAuth> <PostContainer fetchUrl={("/posts/")}/></RequireAuth>} />
               <Route path="feed" element={<RequireAuth><PostContainer fetchUrl={("/users/feed")}/> </RequireAuth>} />
           </Route>
