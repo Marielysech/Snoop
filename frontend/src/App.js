@@ -43,9 +43,8 @@ function App() {
                                             <PostContainer fetchUrl={("/users/feed")}/> 
                                           </RequireAuth>} />
 
-              <Route path="posts/new" element={<RequireAuth>       
-                                              <NewPost />
-                                            </RequireAuth>} />
+              <Route path="posts/new" element= {<NewPost />} />
+                                            
           
   
               <Route path="users/:userName" element={<RequireAuth>

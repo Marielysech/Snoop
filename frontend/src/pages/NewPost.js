@@ -2,55 +2,107 @@ import React, {useState} from 'react'
 import {useNavigate, } from 'react-router-dom';
 import NavBar from '../components/NavBar'
 import { Outlet } from 'react-router-dom';
+import axios from 'axios';
+import { useAuthContext } from '../contexts/AuthContext';
+
 
 // MUI IMPORT
 import Box from '@mui/material/Box';
 import TestDrawer from '../AJETER/testDrawer';
 import TopMenu from '../AJETER/TopMenu';
+import { Typography } from '@mui/material';
+import { Grid } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const drawerWidth = 240;
 
 const NewPost = () => {
-    // const navigate = useNavigate();
 
+  const {userInfo} = useAuthContext()
+
+    const navigate = useNavigate();
+    const [image, setImage] = useState("");
     const [descrValue, setdescrValue] = useState();
-    // const [postData, setPostData] = useState({author: "", authorPic: "", img: "", description: "", date:"", likeCount: 0})
 
+    const resetValues = () => {
+      setdescrValue("");
+      setImage("");
+  }
 
     const createPost = (event) => {
-        const requestOptions = {
-            method: 'POST',
-            credentials: "include",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ description: descrValue})
-          };
-    
-        fetch('/posts/new', requestOptions)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                // setPostData({author: data.author, authorPic: data.authorPic, img: data.img, description: data.description, date:data.date, likeCount: data.likeCount})
-            })
-            setdescrValue("")
-            .catch(error => console.log(error))
-          
-            event.preventDefault();
-  
+      event.preventDefault()
+      if( !image || !descrValue) {return( alert("Please fill all details"))}
 
+      const formData = new FormData(event.target)
+        formData.append('description', descrValue)
+        formData.append('image', image)
+
+        const requestOptions = {
+          method: 'POST',
+          url: "/posts/new",
+          headers: { 'Content-Type': 'multipart/form-data' },
+          data: formData
+        };
+
+        axios(requestOptions)
+                .then((res) => {
+                    console.log("ok", res.data)
+                    resetValues()
+                    res.data &&  navigate(`/users/${userInfo.userName}`, {replace : true})
+                    
+                })
+                .catch((error) => {
+                    console.log( error.response )
+                })
     }
 
     return (
-        <Box sx={{ display: 'flex' }}>
-              <h1>New post</h1>
-            
-            <div>
-                <label for="description">Description</label>
-                <input type="description" placeholder="Enter your description here" value={descrValue} onChange={(e) => setdescrValue(e.target.value)}></input>
-            </div>
-
-        <button type="submit" onClick={createPost}>create post</button>
+     
+        <Box component="form" noValidate onSubmit={createPost} sx={{ mt: 3 }}style={{margin: "5rem 0 0 0"}}> 
+        <h2>Create a new post here
+        </h2>
+          
+          <Grid container spacing={2}>
          
+            <Grid item xs={12} sm={6}>
+                {/* TODO : create here component for image upload */}
+                <TextField
+                  required
+                  fullWidth
+                //   label="Name"
+                  type={"file"}
+                  autoFocus
+                  name='image'
+                  placeholder='Upload your profile picture here'
+                  value={image} 
+                  onChange={(e) => setImage(e.target.value)}
+                />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                fullWidth
+                placeholder="Enter your post description here"
+                autoFocus
+                value={descrValue} 
+                onChange={(e) => setdescrValue(e.target.value)}
+              />
+            </Grid>
+           
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Create new post
+          </Button>
+          
         </Box>
+
       )
 }
 

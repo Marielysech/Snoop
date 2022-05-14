@@ -24,9 +24,8 @@ async function createPost(req,res) {
         //TODO : add profile picture creation
         author: req.user._id,
         content: {
-            // TO DO - HOW TO UPLOAD IMG 
-            // image: req.body.imageURL,
-            text: req.body.description
+            text: req.body.description,
+            image: req.file.filename.replace(/\s/g, ""),
          }        
     })
         console.log(post)

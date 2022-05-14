@@ -19,11 +19,7 @@ async function registerNewUser (req, res) {
     } else {
     
         try {
-          let formData = req.body
-          console.log(formData)
-          console.log(req.file)
-          console.log(req.file.filename)
-          console.log(req.body.name)
+      
 
 
           let userPassword = req.body.password.toString()
