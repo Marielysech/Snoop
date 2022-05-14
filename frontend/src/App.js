@@ -2,7 +2,7 @@ import './App.css';
 import {Routes, Route, useParams} from 'react-router-dom'
 import Auth from './pages/Auth';
 import Register from './oldComponents (before MUI)/Register';
-import Home from './pages/Home';
+import Home from './AJETER/Home';
 import AuthContextProvider from './contexts/AuthContext';
 import UpdateUser from './components/UpdateUser';
 import NewPost from './pages/NewPost';
@@ -14,7 +14,8 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import NewHome from './pages/newHome';
 import HomeDrawer from './pages/HomeDrawer';
-import ResponsiveDrawer from './components/responsiveDR';
+import ResponsiveDrawer from './AJETER/responsiveDR';
+import PageStructure from './components/PageStructure';
 
 function App() {
 
@@ -26,34 +27,33 @@ function App() {
       <AuthContextProvider>
         <main>
         <Routes>
-          <Route path='/' element={ <RequireAuth> <ResponsiveDrawer /> </RequireAuth>} >
+          <Route path="/auth/*" element={<Auth />} >
+                <Route path="login" element={<Login/>} />
+                <Route path="register" element={<SignUp/>} />
+                <Route path="update" element={<RequireAuth>
+                                                <UpdateUser />
+                                              </RequireAuth>}/>
+          </Route> 
+          
+          <Route path='/*' element={ <RequireAuth> <PageStructure /> </RequireAuth>} >
               <Route path="explore" element={<RequireAuth>    
-                                                <PostContainer fetchUrl={("/posts/")}/>
+                                              <PostContainer fetchUrl={("/posts/")}/>
                                             </RequireAuth>} />
               <Route path="feed" element={<RequireAuth>
-                                                  <PostContainer fetchUrl={("/users/feed")}/> 
+                                            <PostContainer fetchUrl={("/users/feed")}/> 
                                           </RequireAuth>} />
-          </Route>
 
-          <Route path="/auth/*" element={<Auth />} >
-                    <Route path="login" element={<Login/>} />
-                    <Route path="register" element={<SignUp/>} />
-                    <Route path="update" element={<RequireAuth>
-                                                      <UpdateUser />
-                                                  </RequireAuth>}/>
-          </Route> 
-
-          <Route path="/posts/new" element={<RequireAuth>       
-                                                <NewPost />
+              <Route path="posts/new" element={<RequireAuth>       
+                                              <NewPost />
                                             </RequireAuth>} />
           
   
-          <Route path="/users/:userName" element={<RequireAuth>
-                                                        <UserProfile/>
+              <Route path="users/:userName" element={<RequireAuth>
+                                                    <UserProfile/>
                                                   </RequireAuth>} />
 
+          </Route>
 
-          {/* <Route path='' element={ <ComponentToDisplay />} /> */}
         </Routes>
         </main>
       </AuthContextProvider>

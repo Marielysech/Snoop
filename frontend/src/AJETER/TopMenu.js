@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useAuthContext } from '../contexts/AuthContext';
 import { useEffect, useState } from 'react';
+import SideBarLink from '../components/SideBarLink';
+import NewSearch from '../components/NewSearch';
 
 // MUI COMPONENT
 import AppBar from '@mui/material/AppBar';
@@ -9,51 +11,18 @@ import { Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import NewSearch from './NewSearch';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import PetsIcon from '@mui/icons-material/Pets';
 
 const drawerWidth = 240;
 
-function TopMenu(props) {
+function TopMenu({handler}) {
 
     // const [file, setFile] = useState(null);
     // const [fileDataURL, setFileDataURL] = useState(null);
-  
-    const {userInfo, setUserInfo} = useAuthContext() //auth.userInfo and auth.setUserInfo
 
-    const { window } = props;
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const {userInfo} = useAuthContext()
 
-    const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-//   const LoadPicture = (e) => {
-//     const file = `./uploads/${userInfo.profilePic}`
-//     setFile(file);
-//   }
-
-//   useEffect(() => {
-//     let fileReader, isCancel = false;
-//     if (file) {
-//       fileReader = new FileReader();
-//       fileReader.onload = (e) => {
-//         const { result } = e.target;
-//         if (result && !isCancel) {
-//           setFileDataURL(result)
-//         }
-//       }
-//       fileReader.readAsDataURL(file);
-//     }
-//     return () => {
-//       isCancel = true;
-//       if (fileReader && fileReader.readyState === 1) {
-//         fileReader.abort();
-//       }
-//     }
-
-//   }, [file]);
-
+    const {window, mobileOpen, setMobileOpen, handleDrawerToggle, drawerWidth, drawer, container} = handler
 
   return (
       <AppBar 
@@ -85,7 +54,7 @@ function TopMenu(props) {
             {/* PLACEHOLDER FOR USERPICTURE AND DRAWER TO GO TO EITH PROFILE OR SETTINGS */}
 
           <Avatar alt={userInfo.userName} src={`/uploads/${userInfo.profilePic}`}/>
-         
+          <SideBarLink text="Profile" Icon={PetsIcon} route={`/users/${userInfo.userName}`} />
          
 
         </Toolbar>

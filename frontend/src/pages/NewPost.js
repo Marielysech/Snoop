@@ -5,9 +5,8 @@ import { Outlet } from 'react-router-dom';
 
 // MUI IMPORT
 import Box from '@mui/material/Box';
-import TestDrawer from '../components/testDrawer';
-import TopMenu from '../components/TopMenu';
-
+import TestDrawer from '../AJETER/testDrawer';
+import TopMenu from '../AJETER/TopMenu';
 
 const drawerWidth = 240;
 
@@ -42,14 +41,6 @@ const NewPost = () => {
 
     return (
         <Box sx={{ display: 'flex' }}>
-          <TopMenu />
-          <TestDrawer />
-          {/* HERE IS THE MAIN - PART THAT INCLUDES THE OUTLET */}
-          <Box component="main"
-            sx={{ flexGrow: 1, 
-                  p: 3, 
-                  width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-          >
               <h1>New post</h1>
             
             <div>
@@ -58,7 +49,7 @@ const NewPost = () => {
             </div>
 
         <button type="submit" onClick={createPost}>create post</button>
-          </Box>
+         
         </Box>
       )
 }

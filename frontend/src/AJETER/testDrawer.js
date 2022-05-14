@@ -5,8 +5,8 @@ import { useAuthContext } from '../contexts/AuthContext';
 
 
 // components importation
-import SideBarLink from "./SideBarLink";
-import Logout from "./Logout";
+import SideBarLink from "../components/SideBarLink";
+import Logout from "../components/Logout";
 
 //MUI importation 
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -23,40 +23,17 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 
 const drawerWidth = 240;
 
-export default function TestDrawer (props) {
+export default function TestDrawer (handler) {
     const {userInfo} = useAuthContext()
 
-    const { window } = props;
+    const {window, mobileOpen, setMobileOpen, handleDrawerToggle, drawerWidth, drawer, container} = handler
 
-  const [mobileOpen, setMobileOpen] = useState(false);
+    console.log(userInfo.userName)
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-console.log(userInfo.userName)
   // to render it differently on mobile of desktop
-  const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
-      <List>
-            <ListItem>
-                 <img src="https://cdn-icons-png.flaticon.com/512/1291/1291961.png" alt="Bone" className="logo"/>           
-            </ListItem>
-            <SideBarLink text="Home" Icon={HomeRoundedIcon} route="/feed" />
-            <SideBarLink text="Explore" Icon={NumbersIcon} route="/explore"/>
-            <SideBarLink text="Profile" Icon={PetsIcon} route={`/users/${userInfo.userName}`} />
-            <SideBarLink text="Settings" Icon={HdrWeakIcon} route="/auth/update" />
-            <SideBarLink text="New post" Icon={AddBoxIcon} route="/posts/new" />
 
-            <ListItem>
-             <Logout />
-            </ListItem>
-        </List>
-    </div>
-  );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+//   const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
         <Box

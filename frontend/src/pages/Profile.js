@@ -4,9 +4,8 @@ import NavBar from "../components/NavBar"
 import PostContainer from "../components/PostsContainer";
 // MUI IMPORT
 import Box from '@mui/material/Box';
-import TestDrawer from '../components/testDrawer';
-import TopMenu from '../components/TopMenu';
-
+import TestDrawer from '../AJETER/testDrawer';
+import TopMenu from "../AJETER/TopMenu";
 const drawerWidth = 240;
 
 const UserProfile = () => {
@@ -34,14 +33,7 @@ const UserProfile = () => {
 
 return (    
         <Box sx={{ display: 'flex' }}>
-          <TopMenu />
-          <TestDrawer />
-          {/* HERE IS THE MAIN - PART THAT INCLUDES THE OUTLET */}
-          <Box component="main"
-            sx={{ flexGrow: 1, 
-                  p: 3, 
-                  width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-          >
+            <h1>THIS iS USER PROFILE</h1>
              <PostContainer fetchUrl={`/users/${userName}`}>
             <h1>This is the profile</h1>
             <div className="introUser">    
@@ -52,10 +44,8 @@ return (
                 </div>
                 <NavLink to="/auth/update"><i className="fa-solid fa-gear fa-xl"></i></NavLink>
             </div>
-            <h2>POST HISTRY</h2>
-        </PostContainer>
+            </PostContainer>
           </Box>
-        </Box>
     
     )
 
