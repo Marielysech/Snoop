@@ -13,10 +13,11 @@ import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Avatar } from '@mui/material';
+import { Avatar, Dialog } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import PetsIcon from '@mui/icons-material/Pets';
+import MenuProfile from './MenuProfile';
 
 
 const drawerWidth = 240;
@@ -64,11 +65,11 @@ function PageStructure(props) {
           <NewSearch />
           </div>
           <div>
-          <Avatar alt={userInfo.userName} src={`/uploads/${userInfo.profilePic}`}/>
-          
+          {/* <Avatar alt={userInfo.userName} src={`/uploads/${userInfo.profilePic}`}/> */}
+          <MenuProfile />
+    
           {/* <SideBarLink text="" Icon={PetsIcon} route={`/users/${userInfo.userName}`} /> */}
           </div>
-
         </Toolbar>
       </AppBar>
 
