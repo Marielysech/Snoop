@@ -1,6 +1,7 @@
 import React, {useStatem, useContext, useState} from 'react'
 import { useAuthContext } from '../contexts/AuthContext';
-import NavBar from './NavBar';
+import DeleteUser from '../components/DeleteUser';
+import NavBar from '../components/NavBar';
 
 const UpdateUser = () => {
 
@@ -37,8 +38,7 @@ const UpdateUser = () => {
     }
 
     return (
-        <>
-        <NavBar />
+        <div>
         <h1>UPDATE INFO</h1>
             
                 <div>
@@ -60,8 +60,8 @@ const UpdateUser = () => {
         
 
             <button type="submit" onClick={updateUser}>Update</button>
-            
-        </>
+            <DeleteUser/>
+        </div>
     )
 }
 export default UpdateUser

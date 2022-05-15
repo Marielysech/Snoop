@@ -1,12 +1,8 @@
 import { useState } from "react";
 import {NavLink, useParams } from "react-router-dom"
-import NavBar from "../components/NavBar"
 import PostContainer from "../components/PostsContainer";
 // MUI IMPORT
 import Box from '@mui/material/Box';
-import TestDrawer from '../AJETER/testDrawer';
-import TopMenu from "../AJETER/TopMenu";
-const drawerWidth = 240;
 
 const UserProfile = () => {
     const {userName} = useParams();

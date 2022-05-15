@@ -56,7 +56,7 @@ export default function MenuProfile() {
                     
 
                 <MenuItem onClick={handleClose}><SideBarLink text="Profile" Icon={PetsIcon} route={`/users/${userInfo.userName}`} /></MenuItem>
-                <MenuItem onClick={handleClose}><SideBarLink text="Settings" Icon={HdrWeakIcon} route="/auth/update" />
+                <MenuItem onClick={handleClose}><SideBarLink text="Settings" Icon={HdrWeakIcon} route="/update" />
 </MenuItem>
               </Menu>
             </div>

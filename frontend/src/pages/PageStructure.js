@@ -1,9 +1,9 @@
-import { leftDrawer } from './LeftMenu';
+import { leftDrawer } from '../components/LeftMenu';
 import * as React from 'react';
-import NewSearch from './NewSearch';
+import NewSearch from '../components/NewSearch';
 import { useAuthContext } from '../contexts/AuthContext';
 import { useState } from 'react';
-import SideBarLink from './SideBarLink';
+import SideBarLink from '../components/SideBarLink';
 
 
 // MUI COMPONENT
@@ -17,7 +17,7 @@ import { Avatar, Dialog } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import PetsIcon from '@mui/icons-material/Pets';
-import MenuProfile from './MenuProfile';
+import MenuProfile from '../components/MenuProfile';
 
 
 const drawerWidth = 240;
@@ -65,10 +65,7 @@ function PageStructure(props) {
           <NewSearch />
           </div>
           <div>
-          {/* <Avatar alt={userInfo.userName} src={`/uploads/${userInfo.profilePic}`}/> */}
           <MenuProfile />
-    
-          {/* <SideBarLink text="" Icon={PetsIcon} route={`/users/${userInfo.userName}`} /> */}
           </div>
         </Toolbar>
       </AppBar>

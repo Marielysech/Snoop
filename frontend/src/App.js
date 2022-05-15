@@ -1,10 +1,8 @@
 import './App.css';
 import {Routes, Route, useParams} from 'react-router-dom'
 import Auth from './pages/Auth';
-import Register from './oldComponents (before MUI)/Register';
-import Home from './AJETER/Home';
 import AuthContextProvider from './contexts/AuthContext';
-import UpdateUser from './components/UpdateUser';
+import UpdateUser from './pages/UpdateUser';
 import NewPost from './pages/NewPost';
 import PostContainer from './components/PostsContainer';
 import UserProfile from './pages/Profile';
@@ -12,10 +10,7 @@ import RequireAuth from './contexts/RequireAuth';
 import CssBaseline from '@mui/material/CssBaseline';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
-import NewHome from './pages/newHome';
-import HomeDrawer from './pages/HomeDrawer';
-import ResponsiveDrawer from './AJETER/responsiveDR';
-import PageStructure from './components/PageStructure';
+import PageStructure from './pages/PageStructure';
 
 function App() {
 
@@ -30,9 +25,7 @@ function App() {
           <Route path="/auth/*" element={<Auth />} >
                 <Route path="login" element={<Login/>} />
                 <Route path="register" element={<SignUp/>} />
-                <Route path="update" element={<RequireAuth>
-                                                <UpdateUser />
-                                              </RequireAuth>}/>
+                
           </Route> 
           
           <Route path='/*' element={ <RequireAuth> <PageStructure /> </RequireAuth>} >
@@ -44,8 +37,11 @@ function App() {
                                           </RequireAuth>} />
 
               <Route path="posts/new" element= {<NewPost />} />
-                                            
-          
+
+
+              <Route path="update" element={<RequireAuth>
+                                                <UpdateUser />
+                                              </RequireAuth>}/>          
   
               <Route path="users/:userName" element={<RequireAuth>
                                                     <UserProfile/>

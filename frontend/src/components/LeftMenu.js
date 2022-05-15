@@ -23,7 +23,7 @@ export const leftDrawer = (
               </ListItem>
               <SideBarLink text="Home" Icon={HomeRoundedIcon} route="/feed" />
               <SideBarLink text="Explore" Icon={NumbersIcon} route="/explore"/>
-              <SideBarLink text="Settings" Icon={HdrWeakIcon} route="/auth/update" />
+              <SideBarLink text="Settings" Icon={HdrWeakIcon} route="/update" />
               <SideBarLink text="New post" Icon={AddBoxIcon} route="/posts/new" />
   
               <ListItem>
