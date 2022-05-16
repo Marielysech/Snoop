@@ -8,7 +8,7 @@ return (
 
         <Grid item  xs={11} md={12} >
             <p style={{textAlign: "center"}}>
-                 {info.text} Go to the <NavLink to="/explore">explore</NavLink> section or create <NavLink to="/new">a new post</NavLink> 
+                 {info.text} Go to the <NavLink to="/explore">explore</NavLink> section or create <NavLink to="/posts/new">a new post</NavLink> 
             </p>
         </Grid>
 

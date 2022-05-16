@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import {NavLink, useParams } from "react-router-dom"
 import PostContainer from "../components/PostsContainer";
 import useFetchRequest from '../helper/fetch'
-import PostTileProfile from "../components/PostTileProfile";
 
 // MUI IMPORT
 import Box from '@mui/material/Box';

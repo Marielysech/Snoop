@@ -1,4 +1,4 @@
-import PostContainer from "./PostsContainer"
+import PostContainer from "../components/PostsContainer"
 
 export default function UserProPropFile () {
 

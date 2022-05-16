@@ -12,7 +12,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import PageStructure from './pages/PageStructure';
 import ProfileUser from './components/newUserProfile';
-import UserProPropFile from './components/UserProProFile';
+import UserProPropFile from './pages/UserProProFile';
 
 function App() {
 
