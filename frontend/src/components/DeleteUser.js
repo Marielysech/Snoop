@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
 
@@ -25,7 +26,9 @@ const DeleteUser = () => {
   }
 
 return (
-    <NavLink onClick={deleteUserAccount} to="/">Delete</NavLink>
+    <Button variant="outlined" color="error">
+    <NavLink style={{textDecoration:"none", color:"red"}} onClick={deleteUserAccount} to="/">Delete Account</NavLink>
+    </Button>
 )
 }
 

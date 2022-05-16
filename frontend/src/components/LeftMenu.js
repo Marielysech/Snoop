@@ -19,7 +19,7 @@ export const leftDrawer = (
         <Divider />
         <List>
               <ListItem>
-                   <img src="https://cdn-icons-png.flaticon.com/512/1291/1291961.png" alt="Bone" className="logo"/>           
+                   <img src="/SnoopLogo.png" alt="Bone" className="logo"/>           
               </ListItem>
               <SideBarLink text="Home" Icon={HomeRoundedIcon} route="/feed" />
               <SideBarLink text="Explore" Icon={NumbersIcon} route="/explore"/>

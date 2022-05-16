@@ -85,15 +85,17 @@ export default function SignUp() {
             flexDirection: 'column',
             alignItems: 'center',
           }}
+          
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <img src='/SnoopLogo.png' style={{maxWidth:"100%", width:"20%"}} />
+          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
-          </Avatar>
+          </Avatar> */}
           <Typography component="h1" variant="h5">
             Create an account
           </Typography>
           <Box component="form" noValidate onSubmit={registerUser} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} >
             <Grid item xs={12}>
                 {/* TODO : create here component for image upload */}
                 <TextField
@@ -125,17 +127,20 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  type="string"
                   label="Username"
                   value={userNameValue} 
+                  autoComplete="new-password"
                   onChange={(e) => setUserNameValue(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
+                  autoFocus
+                  type="email"
                   fullWidth
                   label="Email Address"
-                  autoComplete="email"
                   value={emailValue} 
                   onChange={(e) => setemailValue(e.target.value)}
                 />
@@ -155,7 +160,8 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2 } }
+              md={9}
             >
               Sign Up
             </Button>

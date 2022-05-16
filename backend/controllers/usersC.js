@@ -32,7 +32,7 @@ async function  getUserPosts (req,res) {
     const user = await userModel.findOne({userName: req.params.userName}).populate("posts")
     console.log("this the users post to display " + user.posts)
 
-    user.posts.length > 0 ? res.status(200).json({message: "user post retreived", allPosts: user.posts}) : res.status(200).json({message: `no existing post for ${user.userName} yet`})
+    user.posts.length > 0 ? res.status(200).json({message: "user post retreived", allPosts: user}) : res.status(200).json({message: `no existing post for ${user.userName} yet`})
 
     } catch(error) {
         console.log(error)

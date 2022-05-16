@@ -47,8 +47,8 @@ function Login() {
     const {userInfo, setUserInfo} = useAuthContext() //auth.userInfo and auth.setUserInfo
 
     const navigate = useNavigate();
-    const [emailValue, setemailValue] = useState();
-    const [passwordValue, setpasswordValue] = useState();
+    const [emailValue, setemailValue] = useState("");
+    const [passwordValue, setpasswordValue] = useState("");
 
     const resetValues = () => {
         setemailValue("")
@@ -110,9 +110,7 @@ function Login() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LoginIcon />
-            </Avatar>
+            <img src='/SnoopLogo.png' style={{maxWidth:"100%", width:"40%", marginBottom:"2rem"}} />
             <Logout />
             <Typography component="h1" variant="h5">
               Sign in

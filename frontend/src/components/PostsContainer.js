@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom'
 import useFetchRequest from '../helper/fetch'
 import { Grid } from "@mui/material"
 
-const PostContainer = ({fetchUrl, children}) => {
+const PostContainer = ({fetchUrl}) => {
 
     const { error, isLoaded, postsList, fetchPosts } = useFetchRequest(fetchUrl)
     
@@ -33,7 +33,7 @@ const PostContainer = ({fetchUrl, children}) => {
         md={12}
         >
             {postsList.length > 0 ? 
-            postsList.map((item, index) => <Grid item textAlign="center"  key={index}><PostTile fetch={fetchPosts} item={item}/></Grid> ) 
+            postsList.map((item, index) => <Grid item textAlign="center" style={{heigth: "10%"}}  key={index}><PostTile item={item}/></Grid> ) 
             : 
             <Grid container alignItems="center">
             <Grid item  xs={11} md={12} >

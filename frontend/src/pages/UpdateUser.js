@@ -1,22 +1,35 @@
-import React, {useStatem, useContext, useState} from 'react'
+import React, {useState} from 'react'
+import {NavLink as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
 import DeleteUser from '../components/DeleteUser';
 import NavBar from '../components/NavBar';
 
+//MUI IMPORT
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+
+
 const UpdateUser = () => {
+
+    const navigate = useNavigate();
 
     const {userInfo, setUserInfo} = useAuthContext()
 
-    const [nameValue, setnameValue] = useState();
-    const [emailValue, setemailValue] = useState();
-    const [userNameValue, setUserNameValue] = useState();
-    const [passwordValue, setpasswordValue] = useState();
+    const [nameValue, setnameValue] = useState("");
+    const [emailValue, setemailValue] = useState("");
+    const [userNameValue, setUserNameValue] = useState("");
+    const [passwordValue, setpasswordValue] = useState("");
+    const [image, setImage] = useState("");
 
     const resetValues = () => {
         setnameValue("");
         setemailValue("");
         setpasswordValue("");
-        setUserNameValue("")
+        setUserNameValue("");
+        setImage("")
     }
 
     const updateUser = (event) => {
@@ -31,6 +44,7 @@ const UpdateUser = () => {
           .then(data => {console.log(data)
           setUserInfo({name: data.name, userName: data.userName, email: data.email})})
           resetValues()
+          navigate('/', {replace:true})
           .catch(error => console.log(error))
           event.preventDefault();
   
@@ -38,30 +52,79 @@ const UpdateUser = () => {
     }
 
     return (
-        <div>
-        <h1>UPDATE INFO</h1>
+        <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <h1>Settings: Update your informations</h1>
+        <Box component="form" noValidate onSubmit={updateUser} sx={{ mt: 3 }} textAlign="center">
+            <Grid container spacing={2}  >
+            <Grid item xs={12} >
+               
+                <TextField
+                  required
+                  type={"file"}
+                  autoFocus
+                  name='image'
+                //   label='Update profile picture'
+                  value={image} 
+                  onChange={(e) => setImage(e.target.value)}
+                />
+                </Grid>
+                
+              <Grid item xs={12} >
+                <TextField
+                  
+                  label="Name"
+                  autoFocus
+                  value={nameValue} 
+                  onChange={(e) => setnameValue(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  
+                  label="Username"
+                  value={userNameValue} 
+                  onChange={(e) => setUserNameValue(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Email Address"
+                  value={emailValue} 
+                  onChange={(e) => setemailValue(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  
+                  label="Password"
+                  type="password"
+                  value={passwordValue} 
+                  onChange={(e) => setpasswordValue(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+            <Button
+                textAlign="center"
+                type="submit"
+                variant="contained"
+                style={{margin: "1rem"}}
+                sx={{ mt: 3, mb: 2 }}
+            >
+                Update user info
+            </Button>
+           
             
-                <div>
-                    <label for="name">Name</label>
-                    <input type="text" placeholder="Enter your name here" value={nameValue} onChange={(e) => setnameValue(e.target.value)}></input>
-                </div>
-                <div>
-                    <label for="userName">userName</label>
-                    <input type="text" placeholder="Enter your name here" value={userNameValue} onChange={(e) => setUserNameValue(e.target.value)}></input>
-                </div>
-                <div>
-                    <label >Email</label>
-                    <input type="email" placeholder="Enter your email here" value={emailValue} onChange={(e) => setemailValue(e.target.value)}></input>
-                </div>
-                <div>
-                    <label for="password">Password</label>
-                    <input type='password' placeholder="Enter your password here" value={passwordValue} onChange={(e) => setpasswordValue(e.target.value)}></input>
-                </div>
-        
-
-            <button type="submit" onClick={updateUser}>Update</button>
+          </Box>
+              
             <DeleteUser/>
-        </div>
+        </Box>
     )
 }
 export default UpdateUser

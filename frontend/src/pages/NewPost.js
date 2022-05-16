@@ -23,7 +23,7 @@ const NewPost = () => {
 
     const navigate = useNavigate();
     const [image, setImage] = useState("");
-    const [descrValue, setdescrValue] = useState();
+    const [descrValue, setdescrValue] = useState("");
 
     const resetValues = () => {
       setdescrValue("");

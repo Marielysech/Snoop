@@ -1,12 +1,26 @@
 import { useState } from "react";
 import {NavLink, useParams } from "react-router-dom"
 import PostContainer from "../components/PostsContainer";
+import useFetchRequest from '../helper/fetch'
+import PostTileProfile from "../components/PostTileProfile";
+
 // MUI IMPORT
 import Box from '@mui/material/Box';
+import { Avatar, Grid } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 const UserProfile = () => {
-    const {userName} = useParams();
     const [isfollowed, setIsFollowed] = useState("Follow")
+    let { userName } = useParams()
+
+    const { error, isLoaded, postsList } = useFetchRequest(`/users/${userName}`)
+
+    console.log("HERE LOOOKKKKK" + postsList.posts)
+
+    // const followerArr = postsList.userAction.followedBy || []
+    // const followingArr = postsList.userAction.followedUsers || []
+    
+    const postToDisplay = postsList.posts
 
     function followUser() {
 
@@ -29,18 +43,39 @@ const UserProfile = () => {
 
 return (    
         <Box sx={{ display: 'flex' }}>
-            <h1>THIS iS USER PROFILE</h1>
-             <PostContainer fetchUrl={`/users/${userName}`}>
-            <h1>This is the profile</h1>
-            <div className="introUser">    
-                <img className="profilePic" src="https://media-exp1.licdn.com/dms/image/C5603AQEeNp-zoW3yCA/profile-displayphoto-shrink_800_800/0/1648060969196?e=1657756800&v=beta&t=BtbM2gqat69TLd14Qwp6bBPFBkFW-2IvcIp505KoZNw"/> 
-                <div>
-                    <h5>@userName</h5> 
+            <Grid container style={{marginTop: "5rem"}}>
+                <Grid item style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent: "space-around", border: "solid 0.8px black", width:"100%", padding:"1rem"}}>
+
+                    <div style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
+                        <Avatar alt={postsList.userName} src={`/uploads/${postsList.picture}`}/>
+                        <h5 style={{margin: "0.4rem"}}>@{postsList.userName}</h5> 
+                    </div>
+                    {/* <div style={{textAlign:"center"}}>
+                        <p style={{textDecoration: "underline", marginBottom:" -0.5rem"}}>Following</p>
+                        <p>{followingArr.length}</p>
+                    </div>
+                    <div style={{textAlign:"center"}}>
+                        <p style={{textDecoration: "underline", marginBottom:" -0.5rem"}}>Followed</p>
+                        <p>{followerArr.length}</p>
+                    </div> */}
+                    <IconButton onClick={followUser}>
                     <button className={isfollowed} onClick={followUser}>{isfollowed}</button>
-                </div>
-                <NavLink to="/auth/update"><i className="fa-solid fa-gear fa-xl"></i></NavLink>
-            </div>
-            </PostContainer>
+
+                    </IconButton>
+                    
+           
+                </Grid>
+                <Grid item>
+                    {
+                   
+                        postsList.post.map((item, index) => 
+                        <Grid item textAlign="center" style={{height: "10%"}}  key={index}> 
+                            <PostTileProfile item={item} userData={postsList}/> 
+                        </Grid> )}
+                        
+                    {/* <PostContainer fetchUrl={`/users/${userName}`} /> */}
+                </Grid>
+            </Grid>
           </Box>
     
     )
