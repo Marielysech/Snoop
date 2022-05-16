@@ -5,10 +5,8 @@ const useFetchRequest = url => {
     const [postsList, setPostsList] = useState([])
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
-
-
     
-    function fetchPosts() {
+    function fetchPosts(url) {
         fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -22,7 +20,7 @@ const useFetchRequest = url => {
         })
     }
 
-    useEffect(() => {fetchPosts()}, [url]);
+    useEffect(() => {fetchPosts(url)}, [url]);
   
     return { error, isLoaded, postsList };
   };

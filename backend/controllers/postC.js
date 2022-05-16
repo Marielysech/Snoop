@@ -9,8 +9,13 @@ initialize(passport);
 async function getAllPosts(req,res) {
     try {
 
-    const allPosts = await postModel.find({})
-    allPosts.length > 0 ? res.status(200).json({message: "Fetch successfull", allPosts: allPosts}) : res.status(200).json({message: "no post availaible"})
+    const allPosts = await postModel.find({}).populate('author')
+    console.log('THISS IS ALLL POST' + allPosts)
+    allPosts.length > 0 ? res.status(200).json(
+        {   message: 'Fetch of all post successful',
+            allPosts: allPosts
+           }) 
+        : res.status(200).json({message: "no post availaible"})
    
     } catch(error) {
         console.log(error)

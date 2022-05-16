@@ -5,10 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useAuthContext } from '../contexts/AuthContext';
 import PetsIcon from '@mui/icons-material/Pets';
-import { Avatar } from '@mui/material';
+import { Avatar, Typography } from '@mui/material';
 import { IconButton } from '@mui/material';
 import SideBarLink from './SideBarLink';
 import HdrWeakIcon from '@mui/icons-material/HdrWeak';
+import { NavLink } from 'react-router-dom';
 
 export default function MenuProfile() {
 
@@ -25,7 +26,7 @@ export default function MenuProfile() {
   };
 
   return (
-      <div>
+      <div style={{display:"flex", flexDirection: "row", alignItems: "baseline"}} >
           {userInfo.userName && (
             <div>
               <IconButton
@@ -37,6 +38,7 @@ export default function MenuProfile() {
                 color="inherit"
               >
           <Avatar alt={userInfo.userName} src={`/uploads/${userInfo.profilePic}`}/>
+          
           </IconButton>
               <Menu
                 id="menu-appbar"
@@ -61,6 +63,8 @@ export default function MenuProfile() {
               </Menu>
             </div>
           )}
+          
+          <NavLink to={`/users/${userInfo.userName}`}>@{userInfo.userName}</NavLink>
        </div>
   );
 }
