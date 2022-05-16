@@ -113,9 +113,8 @@ async function updateUser (req,res) {
         userName: req.body.userName || req.user.userName,
         email: req.body.email || req.user.email,
         password: hashedPassword || req.user.hashedPassword,
-        // picture: req.body.picture 
+        picture: req.file.filename.replace(/\s/g, "") || req.user.picture,
     }
-    
    
 
     try {
@@ -141,5 +140,18 @@ async function updateUser (req,res) {
   
 }
 
+const getUser = (req, res) => {
+  res.status(200);
 
-module.exports = {registerNewUser, loginUser, logoutUser, deleteUser, updateUser}
+  if (!req.isAuthenticated()) {
+    res.send();
+  } else {
+    res.json({
+      email: req.user.email,
+      name: req.user.name,
+    });
+  }
+};
+
+
+module.exports = {registerNewUser, loginUser, logoutUser, deleteUser, updateUser, getUser}

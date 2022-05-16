@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import {NavLink, useParams} from 'react-router-dom'
 import useFetchRequest from '../helper/fetch'
+
+//MUI COMPONENT
 import { Grid } from "@mui/material"
 import NoPostsFallback from "./NoPostsFallback"
 import PostsToDisplay from "./PostsToDisplay"
-import Box from '@mui/material/Box';
 import { Avatar } from "@mui/material";
 import { IconButton } from "@mui/material";
 import LoadingSpinner from './Loader'
@@ -22,7 +23,7 @@ const PostContainer = ({fetchUrl, filter = false}) => {
         return <div>Error: {error.message}</div>;
       }
 
-      console.log(filter)
+    //   console.log(filter)
 
     function followUser() {
 
@@ -50,13 +51,16 @@ const PostContainer = ({fetchUrl, filter = false}) => {
     
     if ( filter ) {
         const post = postsList.filter(item => item.author.userName === userName)
-        console.log("hello its true" + post)
+        // console.log("hello its true" + post)
         // setfilteredPost(post)
 
         let noPostsData = {
             text: "You have no post",
             gif : "https://media3.giphy.com/media/3ohs4ruO9hBMDRbOne/giphy.gif?cid=ecf05e47qb7vi2shogo9mxpinvb8ivgw2d5iu209vzoe0sn7&rid=giphy.gif&ct=s"
         }
+
+        // const followerArr = postsList.userAction.followedBy || []
+        // const followingArr = postsList.userAction.followedUsers || []
 
        
         return post.length > 0 ? (
@@ -97,7 +101,10 @@ const PostContainer = ({fetchUrl, filter = false}) => {
                     
                 </Grid >
             </Grid>
-        ) : (<LoadingSpinner/>)
+        ) : ( <div style={{marginTop: "2rem"}}>
+        <LoadingSpinner/> 
+        {post.length < 1 && <NoPostsFallback info={noPostsData} /> }
+        </div>)
 
     }
 
@@ -114,7 +121,9 @@ const PostContainer = ({fetchUrl, filter = false}) => {
         </Grid >
   
         
-    ) : ((<LoadingSpinner/>))
+    ) : ( <div style={{marginTop: "2rem"}}>
+        <LoadingSpinner/> 
+        {postsList.length < 1 && <NoPostsFallback info={noFollowing} /> } </div>)
 }
 
 export default PostContainer

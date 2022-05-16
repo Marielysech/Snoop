@@ -15,6 +15,8 @@ router.get('/delete', authorization.checkAuthenticated, authController.deleteUse
 
 router.post('/update', authorization.checkAuthenticated, upload.single("image"), authController.updateUser);
 
+router.get("/getuser", authController.getUser);
+
 
 
 module.exports = router;

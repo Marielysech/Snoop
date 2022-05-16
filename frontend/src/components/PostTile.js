@@ -1,4 +1,3 @@
-import { Grid, IconButton, Typography } from "@mui/material"
 import { useState } from "react"
 import { NavLink, useNavigate, useParams } from "react-router-dom"
 import Button from "./Button"
@@ -9,6 +8,7 @@ import { Avatar } from "@mui/material"
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Divider, Grid, IconButton, Typography } from "@mui/material"
 
 
 const PostTile = ({item}) => {
@@ -102,7 +102,8 @@ const PostTile = ({item}) => {
 
     return (
         <div> {item.author &&
-        <Grid container className="PostTile" align="center" md={7} xs={10} > 
+        <Grid container className="PostTile" align="center" display="flex" flexDirection="columns" md={5} xs={10} > 
+
 
             {/* TOP PART OF THE POST */}
 
@@ -130,14 +131,16 @@ const PostTile = ({item}) => {
                     {isLiked ? <IconButton onClick={likePost}>< FavoriteIcon color="red" /> </IconButton >: <IconButton onClick={likePost}> <FavoriteBorderIcon style={{color:"red"}} /> </IconButton >}
                     
                     <Typography color="red">{item.like.length}</Typography>
-                    <p style={{padding:"0 0.5rem"}}><strong>{item.date}</strong></p>
+                    <p style={{padding:"0 0.5rem"}}><em>{item.date}</em></p>
+                   
             </Grid>
+            
 
             {/* POST DESCRIPTION */}
-
+            
             <Grid item style={{display: "flex", flexDirection: "column", padding:"0 0.5rem"}}>
             
-                <p><em>{item.author.userName}</em> : {item.content.text}</p>
+                <p style={{textAlign: "left"}}><strong>{item.author.userName}</strong> : {item.content.text}</p>
                
             </Grid>
             

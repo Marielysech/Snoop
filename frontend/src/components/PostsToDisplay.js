@@ -4,6 +4,8 @@ import PostTile from "./PostTile"
 export default function PostsToDisplay ({postList}) {
     return (
         <div>
-             {postList.map((item, index) => <Grid item textAlign="center" style={{heigth: "10%", marginBottom: "1rem"}}  key={index}><PostTile item={item}/></Grid> )}
+        
+            <h1 style={{textAlign: "center"}}>Discover all posts</h1>
+             {postList.map((item, index) => <div  textAlign="center" style={{ marginBottom: "1rem", textAlign:"center"}}  key={index}><PostTile item={item}/></div> )}
         </div>
 )}
