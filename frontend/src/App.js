@@ -11,6 +11,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import PageStructure from './pages/PageStructure';
+import ProfileUser from './components/newUserProfile';
+import UserProPropFile from './components/UserProProFile';
 
 function App() {
 
@@ -44,7 +46,7 @@ function App() {
                                               </RequireAuth>}/>          
   
               <Route path="users/:userName" element={<RequireAuth>
-                                                    <UserProfile/>
+                                                    <UserProPropFile/>
                                                   </RequireAuth>} />
 
           </Route>

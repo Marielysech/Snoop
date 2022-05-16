@@ -63,7 +63,7 @@ const PostTileProfile = ({item, userData}) => {
 
                         <div style={{alignItems: "center", padding:"0 0.3rem"}}>
 
-                            <Avatar alt={userData.userName} src={`/uploads/${userData.picture}`} />
+                            {/* <Avatar alt={userData.userName} src={`/uploads/${userData.picture}`} /> */}
 
                             <h5 style={{padding:"0 0.5rem"}}>@{userData.userName}</h5>
 

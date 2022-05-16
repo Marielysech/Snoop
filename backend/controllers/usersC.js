@@ -29,10 +29,13 @@ async function  getUserPosts (req,res) {
 
     try {
 
-    const user = await userModel.findOne({userName: req.params.userName}).populate("posts")
+    const user = await userModel.findOne({userName: req.params.userName}).populate("posts").populate({
+        path : "posts.author",
+        })
+
     console.log("this the users post to display " + user.posts)
 
-    user.posts.length > 0 ? res.status(200).json({message: "user post retreived", allPosts: user}) : res.status(200).json({message: `no existing post for ${user.userName} yet`})
+    user.posts.length > 0 ? res.status(200).json({message: "user post for profile retreived", allPosts: user.posts}) : res.status(200).json({message: `no existing post for ${user.userName} yet`})
 
     } catch(error) {
         console.log(error)

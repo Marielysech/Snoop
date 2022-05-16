@@ -10,7 +10,7 @@ const useFetchRequest = url => {
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            console.log("data from fetch" +data)
             data.allPosts && setPostsList(data.allPosts) && setIsLoaded(true)
         })
         .catch(err => {

@@ -1,29 +1,29 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {NavLink, useParams } from "react-router-dom"
-import PostContainer from "../components/PostsContainer";
 import useFetchRequest from '../helper/fetch'
-import PostTileProfile from "../components/PostTileProfile";
 
 // MUI IMPORT
 import Box from '@mui/material/Box';
 import { Avatar, Grid } from "@mui/material";
 import { IconButton } from "@mui/material";
+import { Typography } from '@mui/material';
+import { LinearProgress } from '@mui/material';
+import PostTile from './PostTile';
 
-const UserProfile = () => {
+const ProfileUser = () => {
     const [isfollowed, setIsFollowed] = useState("Follow")
     let { userName } = useParams()
 
     const fetchUrl = `/users/${userName}`
 
     const { error, isLoaded, postsList } = useFetchRequest(fetchUrl)
-    
+    const {postsList : allUsers } = useFetchRequest("/users/search")
 
-    console.dir(postsList)
+    const userToDisplay = allUsers.filter(item => item.userName === userName)
 
-    // const followerArr = postsList.userAction.followedBy || []
-    // const followingArr = postsList.userAction.followedUsers || []
-    
-    const postToDisplay = postsList.posts
+    console.log("this is usertodisplay" + userToDisplay + "allUser:" + allUsers)
+    // console.log(postsList.posts[0])
+    // const item = postsList.posts[0]
 
     function followUser() {
 
@@ -43,6 +43,17 @@ const UserProfile = () => {
 
     }
 
+    if (isLoaded) {
+        return (
+            <div>
+                <LinearProgress />
+                <LinearProgress />
+                <LinearProgress />
+                <LinearProgress />
+            </div>
+        )
+    }
+
 return (    
         <Box sx={{ display: 'flex' }}>
             <Grid container style={{marginTop: "5rem"}}>
@@ -53,16 +64,10 @@ return (
                         <Avatar alt={postsList.userName} src={`/uploads/${postsList.picture}`}/>
 
                         <h5 style={{margin: "0.4rem"}}>@{postsList.userName}</h5> 
+
+                        <p>here: {userToDisplay.userName}</p>
                         
                     </div>
-                    {/* <div style={{textAlign:"center"}}>
-                        <p style={{textDecoration: "underline", marginBottom:" -0.5rem"}}>Following</p>
-                        <p>{followingArr.length}</p>
-                    </div>
-                    <div style={{textAlign:"center"}}>
-                        <p style={{textDecoration: "underline", marginBottom:" -0.5rem"}}>Followed</p>
-                        <p>{followerArr.length}</p>
-                    </div> */}
 
                     <IconButton onClick={followUser}>
                         <button className={isfollowed} onClick={followUser}>{isfollowed}</button>
@@ -71,15 +76,16 @@ return (
                 </Grid>
                 <Grid item>
                 
-                {postsList.posts.map((item, index) => <p>hello</p>)}
-                     {/* { 
-                   
-                    postsList.posts.map((item, index) => {
-                    
-                       <p>hello</p>
-                     )} */}
-                        
-                    {/* <PostContainer fetchUrl={`/users/${userName}`} /> */}
+
+                {postsList.map((item, index) => <Grid container marginTop="3rem"><PostTile item={item} />
+                    </Grid>)}
+                
+
+
+
+
+
+
                 </Grid>
             </Grid>
           </Box>
@@ -88,4 +94,4 @@ return (
 
 }
 
-export default UserProfile
+export default ProfileUser
