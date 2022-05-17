@@ -58,7 +58,7 @@ const PostTile = ({item}) => {
 
     return (
         <div> {item.author &&
-        <Grid container className="PostTile" align="center" display="flex" flexDirection="columns" md={5} xs={10} border="0.5px solid grey" > 
+        <Grid container className="PostTile" align="center" display="flex" flexDirection="columns" md={5} xs={13} border="0.5px solid grey" > 
 
 
             {/* TOP PART OF THE POST */}
@@ -76,7 +76,7 @@ const PostTile = ({item}) => {
             
             {/* POST IMAGE */}
 
-            <Grid item={true} style={{maxHeight:" 300px"}} >
+            <Grid item={true} style={{maxHeight:"100%"}} >
                 <img style={{ objectFit: "cover", maxHeight:"100%", maxWidth:"100%"}} className="publishedImg" src={`/uploads/${item.content.image}`} />
             </Grid>
 
