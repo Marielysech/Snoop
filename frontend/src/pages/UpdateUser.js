@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {NavLink as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
 import DeleteUser from '../components/DeleteUser';
-import NavBar from '../components/NavBar';
+import axios from 'axios'
 
 //MUI IMPORT
 import Box from '@mui/material/Box';
@@ -33,22 +33,40 @@ const UpdateUser = () => {
     }
 
     const updateUser = (event) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: nameValue, userName: userNameValue, email: emailValue, password: passwordValue })
-          };
-    
-          fetch('/auth/update', requestOptions)
-          .then(res => res.json())
-          .then(data => {console.log(data)
-          setUserInfo({name: data.name, userName: data.userName, email: data.email})})
-          resetValues()
-          navigate('/', {replace:true})
-          .catch(error => console.log(error))
-          event.preventDefault();
-  
 
+      event.preventDefault()
+
+      if( !nameValue && !userNameValue && !emailValue && !passwordValue && !image) {return( alert("You must at least update one field to send out the form"))}
+
+      const formData = new FormData(event.target)
+      formData.append('name', nameValue)
+      formData.append('userName', userNameValue)
+      formData.append('email', emailValue)
+      formData.append('password', passwordValue)
+      formData.append('image', image)
+
+
+      const requestOptions = {
+        method: 'POST',
+        url: "/auth/update",
+        headers: { 'Content-Type': 'multipart/form-data' },
+        // body: formData
+        data: formData
+      };
+    
+      axios(requestOptions)
+          .then((res) => {
+              console.log("ok", res.data)
+
+              resetValues()
+
+              setUserInfo({name: res.data.name, userName: res.data.userName, email: res.data.email, profilePic: res.data.picture})
+
+              // res.data &&  navigate('/feed', {replace : true})
+          })
+          .catch((error) => {
+              console.log( error.response )
+          })   
     }
 
     return (

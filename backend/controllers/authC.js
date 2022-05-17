@@ -58,7 +58,8 @@ async function loginUser (req, res, next) {
                 email: user.email,
                 name: user.name,
                 userName: user.userName,
-                picture: user.picture
+                picture: user.picture,
+                id: user._id
              });
           });
         }
@@ -122,7 +123,7 @@ async function updateUser (req,res) {
     newUserInfo.userName && await userModel.updateOne({_id: userID}, {userName: newUserInfo.userName}) //update userName
     newUserInfo.email && await userModel.updateOne({_id: userID}, {email: newUserInfo.email}) //update email
     newUserInfo.password && await userModel.updateOne({_id: userID}, {password: newUserInfo.password}) //update password
-
+    newUserInfo.picture && await userModel.updateOne({_id: userID}, {picture: newUserInfo.picture}) //update picture
 
 
     const modifiedUser = await userModel.findOne({name: newUserInfo.name})
@@ -132,7 +133,7 @@ async function updateUser (req,res) {
         email: newUserInfo.email,
         name: newUserInfo.name,
         userName: newUserInfo.userName,
-        // picture: user.picture
+        picture: newUserInfo.picture
      });
     } catch(error) {
       console.log(error)

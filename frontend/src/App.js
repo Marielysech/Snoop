@@ -5,14 +5,12 @@ import AuthContextProvider from './contexts/AuthContext';
 import UpdateUser from './pages/UpdateUser';
 import NewPost from './pages/NewPost';
 import PostContainer from './components/PostsContainer';
-import UserProfile from './pages/Profile';
 import RequireAuth from './contexts/RequireAuth';
 import CssBaseline from '@mui/material/CssBaseline';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import PageStructure from './pages/PageStructure';
-import ProfileUser from './components/newUserProfile';
-import UserProPropFile from './pages/UserProProFile';
+import UserProPropFile from './pages/UserProfile';
 
 function App() {
 
@@ -35,7 +33,7 @@ function App() {
                                               <PostContainer fetchUrl={("/posts/")}/>
                                             </RequireAuth>} />
               <Route path="feed" element={<RequireAuth>
-                                            <PostContainer fetchUrl={("/users/feed")}/> 
+                                            <PostContainer followed="true" fetchUrl={("/posts/")}/> 
                                           </RequireAuth>} />
 
               <Route path="posts/new" element= {<NewPost />} />

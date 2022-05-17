@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {NavLink, useParams} from 'react-router-dom'
 import useFetchRequest from '../helper/fetch'
+import { useAuthContext } from "../contexts/AuthContext";
 
 //MUI COMPONENT
 import { Grid } from "@mui/material"
@@ -11,7 +12,9 @@ import { IconButton } from "@mui/material";
 import LoadingSpinner from './Loader'
 
 
-const PostContainer = ({fetchUrl, filter = false}) => {
+const PostContainer = ({fetchUrl, filter = false, followed = false}) => {
+
+    const {userInfo, setUserInfo} = useAuthContext() //auth.userInfo and auth.setUserInfo
 
     const { error, isLoaded, postsList } = useFetchRequest(fetchUrl)
     const [filteredPost, setfilteredPost] = useState([])
@@ -85,7 +88,7 @@ const PostContainer = ({fetchUrl, filter = false}) => {
                     </div> */}
 
                     <IconButton onClick={followUser}>
-                        <button className={isfollowed} onClick={followUser}>{isfollowed}</button>
+                        <button className={isfollowed}>{isfollowed}</button>
                     </IconButton>
         
                 </Grid>
@@ -108,6 +111,31 @@ const PostContainer = ({fetchUrl, filter = false}) => {
 
     }
 
+    if ( followed ) {
+        // const post = postsList.filter(item => item.author.userName === userName)
+        const post = postsList.filter(item => item.author.userAction.followedBy.includes(userInfo.id))
+
+        // console.log("hello its true" + postsList[0].author.userAction.followedBy[0] + console.log(userInfo.id))
+
+       
+        return post.length > 0 ? (
+            
+            <Grid   maxWidth="sm" className="allFollowedPosts" style={{margin: "4rem 0 0 0"}} 
+                    container alignItems="center" 
+                    spacing={2}
+                    md={12}
+            >
+                {post.length > 0 ?
+                <PostsToDisplay postList={post} /> :
+                <NoPostsFallback info={noFollowing}/> }
+                
+            </Grid >
+            
+        ) : (<div style={{marginTop: "2rem"}}>
+        <LoadingSpinner /><NoPostsFallback info={noFollowing}/> </div> )
+
+    }
+
     return postsList.length > 0 ? (
         <Grid  maxWidth="sm" className="allFollowedPosts" style={{margin: "4rem 0 0 0"}} 
         container alignItems="center" 
@@ -121,9 +149,9 @@ const PostContainer = ({fetchUrl, filter = false}) => {
         </Grid >
   
         
-    ) : ( <div style={{marginTop: "2rem"}}>
+    ) : ( 
         <LoadingSpinner/> 
-        {postsList.length < 1 && <NoPostsFallback info={noFollowing} /> } </div>)
+       )
 }
 
 export default PostContainer

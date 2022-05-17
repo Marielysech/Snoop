@@ -5,20 +5,20 @@ const postModel = require('../models/Post');
 async function getFollowedPosts (req,res) {
     try {
     let userID = req.user._id;
-    const posts = await userModel.find({_id: userID}).populate({
-        path : "userAction.followedUsers",
-        populate : {
-          path : 'posts'
-        }})
+    const posts = await userModel.findOne({_id: userID}).populate()
+    const allposts = await postModel.find({}).populate("author")
 
-    console.log(posts)
+    // const posts = await postModel.find({}).populate("author")
+    console.log("all posts form post model" + allposts)
 
-    const followedUsersArray = req.user.userAction.followedUsers //this is an array of object, array of all users followed and their posts
-    const followedPosts = []
-    followedUsersArray.map(elem => followedPosts.push(elem.posts)) //elem.post must be an object of post   
-    console.log(followedPosts)
+    const followedPosts = allposts.filter( item => item._id === userID)
+    console.log("followed post of the user" + followedPosts)
 
-    followedPosts.length > 0 ? res.status(200).json({message: "Fetch successfull", allPosts: followedPosts}) : res.status(200).json({message: "no post availaible"})
+   
+
+    followedPosts.length > 0 ? res.status(200).json({message: "Followed user posts retreived", allPosts: followedPosts}) : res.status(200).json({message: "no post availaible"})
+
+
     } catch(error) {
         console.log(error)
     }   
@@ -59,11 +59,15 @@ async function  followUser(req,res) {
         if(!isUserFollowed) {
             await userModel.updateOne({_id: req.user._id}, {  $push: {
                 "userAction.followedUsers": userToFollow._id}})
+            await userModel.updateOne({_id: userToFollow._id}, {  $push: {
+                "userAction.followedBy": req.user._id}})
             console.log(req.params.userName + 'followed')
             return res.status(200).json({user: `${userToFollow.userName}`, message :  "followed"})
         }
             await userModel.updateOne({_id: req.user._id}, {  $pull: {
                 "userAction.followedUsers": userToFollow._id}})
+            await userModel.updateOne({_id: userToFollow._id}, {  $pull: {
+                "userAction.followedBy": req.user._id}})
             console.log(req.params.userName + 'unfollowed')
             return res.status(200).json({user: `${userToFollow.userName}`, message :  "unfollowed"})
 
