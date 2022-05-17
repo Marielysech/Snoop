@@ -79,7 +79,7 @@ const UpdateUser = () => {
         }}
       >
         <h1>Settings: Update your informations</h1>
-        <Box component="form" noValidate onSubmit={updateUser} sx={{ mt: 3 }} textAlign="center">
+        <Box component="form" noValidate onSubmit={updateUser} sx={{ mt: 3 }} style={{textAlign:"center"}}>
             <Grid container spacing={2}  >
             <Grid item xs={12} >
                
@@ -129,10 +129,9 @@ const UpdateUser = () => {
               </Grid>
             </Grid>
             <Button
-                textAlign="center"
+                style={{textAlign: "center", margin: "1rem"}}
                 type="submit"
                 variant="contained"
-                style={{margin: "1rem"}}
                 sx={{ mt: 3, mb: 2 }}
             >
                 Update user info

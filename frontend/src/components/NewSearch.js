@@ -2,12 +2,19 @@ import Button from "../components/Button"
 import React, {useState, useEffect} from 'react'
 import useFetchRequest from "../helper/fetch"
 import { NavLink } from "react-router-dom"
+
+// MUI IMPORT
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { Drawer } from "@mui/material";
+import { Avatar, Drawer } from "@mui/material";
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import Popper from '@mui/material/Popper';
+import Fade from '@mui/material/Fade';
+import LoadingSpinner from './Loader'
+
 
 // import Search from "@mui/icons-material/Search"
 
@@ -58,43 +65,59 @@ function NewSearch() {
 
     const [searchValue, setSearchValue] = useState("") 
 
-    //TODO Loader for user list   
     const { error, isLoaded, postsList: userList } = useFetchRequest("/users/search")
 
     //To display or not the users
     const [isSearched, setIsSearched] = useState(false) 
-    const [refinedSearch, setRefinedSearch] = useState([])   
+    const [refinedSearch, setRefinedSearch] = useState([])
+    const [initialSearch, setInitialSearch] = useState(userList)
 
 
-    const searchUser = (e) => {
-        searchValue.length < 2 ? setIsSearched(false) : setIsSearched(true)
-        
-        const usersMatch = userList.filter(item => item.userName.includes(e.target.value))
-        usersMatch.length > 2 && setRefinedSearch(usersMatch)
-        usersMatch.length < 2 && setRefinedSearch([])
+
+
+    function searchUser (e) {
+        searchValue.length < 1 ? setIsSearched(false) : setIsSearched(true)
+        const usersMatch = userList.filter(item => item.userName(searchValue))
+      
+        console.log("this should be search results" + usersMatch.userName)
+        usersMatch.length > 1 && setRefinedSearch(usersMatch)
+        // usersMatch.length <  && setRefinedSearch([])
 
     }
 
-    // const allowDrawer = () => {
-    //     setSearchResultOpen(!searchResultOpen)
-    // }
+    //function for popper search result
+    const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
 
-    const container = window !== undefined ? () => window().document.body : undefined;
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+      setOpen((previousOpen) => !previousOpen);
+    };
+
+    const closePanel = () => {
+      setOpen(false);
+    };
+
+    const canBeOpen = open && Boolean(anchorEl);
+    const id = canBeOpen ? 'transition-popper' : undefined;
     
     const searchResults = (
         <div>
-            <List>
+            <div style={{display: "flex", flexDirection:"column"}}>
             {refinedSearch.map((item, index) => 
                 <ListItem key={index}>
                     <NavLink to={`/users/${item.userName}`}>
-                        <h1>{item.userName}</h1>
+                      <div className="userSearched">
+                      <Avatar src={`/uploads/${item.picture}`}/>
+                        <p className="searchResults">{item.userName}</p>
+                        </div>
                     </NavLink>
                 </ListItem> )}
-            </List>
+            </div>
         </div>
     )
 
-return (
+return  (
     <>  
          <Search>
             <SearchIconWrapper>
@@ -105,43 +128,22 @@ return (
                 setSearchValue(e.target.value)
                 searchUser(e)
             }}
-            //   onClick={(e) => allowDrawer(e)}
+              onClick={handleClick}
               value={searchValue} 
               placeholder="Search user"
               inputProps={{ 'aria-label': 'search' }}
             /> 
-             </Search>
-             <Drawer
-                >
-                    {searchResults}
-                </Drawer>
-            
-            
-        
-         
-{/* 
-        <form className="searchBar">
-             <input 
-                placeholder="Search users" 
-                value={searchValue}               
-                onChange={(e) => {
-                    setSearchValue(e.target.value)
-                    searchUser(e)
-                }}
-            ></input>
-            <p>{searchValue}</p>
-
-        {isSearched ? 
-        <div className="userList">
-            {refinedSearch.map((item, index) => <div key={index}>
-            <NavLink to={`/users/${item.userName}`}>
-                <h1>{item.userName}</h1>
-            </NavLink>
-            </div>)}
-        </div> : null}
-            
-
-        </form>       */}
+             {refinedSearch.length > 1 ?
+              <Popper id={id} open={open} anchorEl={anchorEl} transition className="popper">
+              {({ TransitionProps }) => (
+              <Fade {...TransitionProps} timeout={350}>
+              <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
+              {searchResults}
+              </Box>
+              </Fade>
+                )}
+              </Popper> : null}
+      </Search>    
        
     </>
    

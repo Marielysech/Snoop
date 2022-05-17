@@ -145,3 +145,44 @@ box-shadow: 0 0 6px hsl(210 14% 90%);
       font-size: larger;
 
   }
+
+.popper {
+    width: 20%;
+    /* margin: 2rem auto; */
+}
+
+/* .popper div a {
+    color:hsl(226, 78%, 46%);
+    font-size: 20px;
+    padding: 0 0.5rem;
+    width: 100%
+
+}
+
+.popper div a:hover{
+    background-color: #e8f5fe;
+    border-radius: 25px;
+    padding: 0 0.5rem
+} */
+
+.searchResults {
+    padding: 0 0.5rem;
+}
+.userSearched {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.userSearched a {
+    color:hsl(226, 78%, 46%);
+    font-size: 20px;
+    padding: 0 0.5rem;
+    width: 100%
+}
+
+.userSearched:hover {
+    background-color: #e8f5fe;
+    border-radius: 25px;
+    padding: 0 0.5rem
+}
