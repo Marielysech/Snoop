@@ -9,7 +9,7 @@ initialize(passport);
 async function getAllPosts(req,res) {
     try {
 
-    const allPosts = await postModel.find({}).populate('author')
+    const allPosts = await postModel.find({}).populate('author').sort({'date': "-1"})
     console.log('THISS IS ALLL POST' + allPosts)
     allPosts.length > 0 ? res.status(200).json(
         {   message: 'Fetch of all post successful',

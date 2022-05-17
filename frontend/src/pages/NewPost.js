@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {useNavigate, } from 'react-router-dom';
-import NavBar from '../components/NavBar'
 import { Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { useAuthContext } from '../contexts/AuthContext';
@@ -8,7 +7,6 @@ import { useAuthContext } from '../contexts/AuthContext';
 
 // MUI IMPORT
 import Box from '@mui/material/Box';
-import TestDrawer from '../AJETER/testDrawer';
 import TopMenu from '../AJETER/TopMenu';
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';

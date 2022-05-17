@@ -16,6 +16,8 @@ const PostContainer = ({fetchUrl, filter = false, followed = false}) => {
 
     const {userInfo, setUserInfo} = useAuthContext() //auth.userInfo and auth.setUserInfo
 
+    
+
     const { error, isLoaded, postsList } = useFetchRequest(fetchUrl)
     const [filteredPost, setfilteredPost] = useState([])
     const [isfollowed, setIsFollowed] = useState("Follow")
@@ -46,12 +48,8 @@ const PostContainer = ({fetchUrl, filter = false, followed = false}) => {
 
     }
 
-    const noFollowing = {
-        text: "You don't follow any user yet ! ",
-        gif : "https://media.giphy.com/media/3o7abAHdYvZdBNnGZq/giphy.gif"
-    }
 
-    
+    // rendering for the user page
     if ( filter ) {
         const post = postsList.filter(item => item.author.userName === userName)
         // console.log("hello its true" + post)
@@ -67,8 +65,8 @@ const PostContainer = ({fetchUrl, filter = false, followed = false}) => {
 
        
         return post.length > 0 ? (
-            <Grid container marginTop="5rem">
-                <Grid item style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent: "space-around", border: "solid 0.8px black", width:"100%", padding:"1rem"}}>
+            <Grid container marginTop="5rem" style={{border: "0.5px solid black", borderRadius: "20px", backgroundColor: "#92B4EC30"}}>
+                <Grid item style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent: "space-between", border: "solid 0.8px black", width:"100%", padding:"1rem",  borderTopLeftRadius: "20px", borderTopRightRadius: "20px", backgroundColor: "white"}}>
 
                     
                     <div style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
@@ -93,7 +91,7 @@ const PostContainer = ({fetchUrl, filter = false, followed = false}) => {
         
                 </Grid>
 
-                <Grid   maxWidth="sm" className="allFollowedPosts" style={{margin: "4rem 0 0 0"}} 
+                <Grid   maxWidth="sm" className="allFollowedPosts" style={{margin: "2.5rem 0 0 0"}} 
                         container alignItems="center" 
                         spacing={2}
                         md={12}
@@ -111,20 +109,26 @@ const PostContainer = ({fetchUrl, filter = false, followed = false}) => {
 
     }
 
+    //rendering for feed page
     if ( followed ) {
         // const post = postsList.filter(item => item.author.userName === userName)
         const post = postsList.filter(item => item.author.userAction.followedBy.includes(userInfo.id))
 
         // console.log("hello its true" + postsList[0].author.userAction.followedBy[0] + console.log(userInfo.id))
 
-       
+        const noFollowing = {
+            text: "You don't follow any user yet ! ",
+            gif : "https://media.giphy.com/media/3o7abAHdYvZdBNnGZq/giphy.gif"
+        }
+
         return post.length > 0 ? (
             
-            <Grid   maxWidth="sm" className="allFollowedPosts" style={{margin: "4rem 0 0 0"}} 
+            <Grid   maxWidth="sm" className="allFollowedPosts" style={{margin: "2.5rem 0 0 0"}}
                     container alignItems="center" 
                     spacing={2}
                     md={12}
             >
+                <h1 className="pageTitle">Followed user's posts</h1>
                 {post.length > 0 ?
                 <PostsToDisplay postList={post} /> :
                 <NoPostsFallback info={noFollowing}/> }
@@ -136,15 +140,17 @@ const PostContainer = ({fetchUrl, filter = false, followed = false}) => {
 
     }
 
+    //rendering for explore page
     return postsList.length > 0 ? (
-        <Grid  maxWidth="sm" className="allFollowedPosts" style={{margin: "4rem 0 0 0"}} 
+        <Grid  maxWidth="sm" className="allFollowedPosts" style={{margin: "2.5rem 0 0 0"}} 
         container alignItems="center" 
         spacing={2}
         md={12}
         >
+            <h1 className="pageTitle">Discover all posts</h1>
                 {postsList.length > 0 ?
                 <PostsToDisplay postList={postsList} /> :
-                <NoPostsFallback info={noFollowing}/> }
+                <p>There is no post yet on the plateform !</p> }
                 
         </Grid >
   

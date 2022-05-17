@@ -3,6 +3,7 @@ import { NavLink, useNavigate, useParams } from "react-router-dom"
 import Button from "./Button"
 import { useAuthContext } from '../contexts/AuthContext';
 
+
 //MUI IMPORT
 import { Avatar } from "@mui/material"
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -11,7 +12,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Divider, Grid, IconButton, Typography } from "@mui/material"
 
 
-const PostTile = ({item}) => {
+const PostTile = ({item, fetchUrl}) => {
 
     let { userName } = useParams()
 
@@ -32,7 +33,10 @@ const PostTile = ({item}) => {
 
     fetch(`/posts/delete/${item._id}`, requestOptions)
         .then(res =>res.json())
-        .then(data => console.log(data.message))
+        .then(data => {
+            console.log(data.message)
+            // data.message === "Publication deleted" && navigate(0)
+    })
         .catch(error => console.log(error))
     }
 
@@ -58,7 +62,7 @@ const PostTile = ({item}) => {
 
     return (
         <div> {item.author &&
-        <Grid container className="PostTile" align="center" display="flex" flexDirection="columns" md={5} xs={13} border="0.5px solid grey" > 
+        <Grid container className="PostTile" align="center" display="flex" flexDirection="columns" md={5} xs={13} border="0.5px solid grey" style={{backgroundColor: "white"}} > 
 
 
             {/* TOP PART OF THE POST */}
@@ -85,10 +89,12 @@ const PostTile = ({item}) => {
             <Grid item={true} style={{display: "flex", flexDirection: "row", padding:"0 0.5rem", alignItems: "center"}}>
                 
                     {isLiked ? <IconButton onClick={likePost}>< FavoriteIcon color="red" /> </IconButton >: <IconButton onClick={likePost}> <FavoriteBorderIcon style={{color:"red"}} /> </IconButton >}
-                    
-                    <Typography color="red">{item.like.length}</Typography>
+            </Grid>
+            
+            <Grid item={true} style={{display: "flex", flexDirection: "row", padding:"0 0.5rem", alignItems: "center"}}>
+
+            <Typography color="red">{item.like.length}</Typography>
                     <p style={{padding:"0 0.5rem"}}><em>{item.date}</em></p>
-                   
             </Grid>
             
 
@@ -96,7 +102,7 @@ const PostTile = ({item}) => {
             
             <Grid item={true} style={{display: "flex", flexDirection: "column", padding:"0 0.5rem"}}>
             
-                <p style={{textAlign: "left"}}><strong>{item.author.userName}</strong> : {item.content.text}</p>
+                <p style={{textAlign: "justify"}}><strong>{item.author.userName}</strong> : {item.content.text}</p>
                
             </Grid>
             

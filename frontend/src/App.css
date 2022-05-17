@@ -132,3 +132,16 @@ box-shadow: 0 0 6px hsl(210 14% 90%);
     font-weight: 700;
     text-transform: inherit;
   }
+
+  .pageTitle {
+      margin: 1rem auto;
+      text-decoration: underline;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgb(80 182 244);
+      color: rgb(24 118 209);
+      border-radius: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: larger;
+
+  }

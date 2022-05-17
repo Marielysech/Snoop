@@ -5,8 +5,8 @@ const postModel = require('../models/Post');
 async function getFollowedPosts (req,res) {
     try {
     let userID = req.user._id;
-    const posts = await userModel.findOne({_id: userID}).populate()
-    const allposts = await postModel.find({}).populate("author")
+    // const posts = await userModel.findOne({_id: userID}).populate()
+    const allposts = await postModel.find({}).populate("author").sort({'date': "-1"})
 
     // const posts = await postModel.find({}).populate("author")
     console.log("all posts form post model" + allposts)
@@ -31,7 +31,7 @@ async function  getUserPosts (req,res) {
 
     const user = await userModel.findOne({userName: req.params.userName}).populate("posts").populate({
         path : "posts.author",
-        })
+        }).sort({'posts.date': "-1"})
 
     console.log("this the users post to display " + user.posts)
 
