@@ -9,8 +9,13 @@ initialize(passport);
 async function getAllPosts(req,res) {
     try {
 
-    const allPosts = await postModel.find({})
-    allPosts.length > 0 ? res.status(200).json({message: "Fetch successfull", allPosts: allPosts}) : res.status(200).json({message: "no post availaible"})
+    const allPosts = await postModel.find({}).populate('author')
+    console.log('THISS IS ALLL POST' + allPosts)
+    allPosts.length > 0 ? res.status(200).json(
+        {   message: 'Fetch of all post successful',
+            allPosts: allPosts
+           }) 
+        : res.status(200).json({message: "no post availaible"})
    
     } catch(error) {
         console.log(error)
@@ -24,9 +29,8 @@ async function createPost(req,res) {
         //TODO : add profile picture creation
         author: req.user._id,
         content: {
-            // TO DO - HOW TO UPLOAD IMG 
-            // image: req.body.imageURL,
-            text: req.body.description
+            text: req.body.description,
+            image: req.file.filename.replace(/\s/g, ""),
          }        
     })
         console.log(post)

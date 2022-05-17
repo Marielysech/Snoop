@@ -66,7 +66,7 @@ mongoose.connect(process.env.DB_SERVER, paramsMongo)
 
 //Routes
 app.use('/', express.static('./public'))
-app.use('/uploads', express.static('uploads')) //to store user img files
+app.use('/uploads', express.static('./uploads')) //to store user img files
 app.use("/auth", authRoute);
 app.use("/users", usersRoute);
 app.use("/posts", postRoute);

@@ -1,10 +1,26 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { NavLink, useNavigate, useParams } from "react-router-dom"
 import Button from "./Button"
+import { useAuthContext } from '../contexts/AuthContext';
+
+//MUI IMPORT
+import { Avatar } from "@mui/material"
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Divider, Grid, IconButton, Typography } from "@mui/material"
+
 
 const PostTile = ({item}) => {
+
+    let { userName } = useParams()
+
+    const {userInfo} = useAuthContext()
+    const [profilePosts, setProfilePosts] = useState([])
+
     const navigate = useNavigate()
-    const [isLiked, setisLiked] = useState("notLiked")
+    const [isLiked, setisLiked] = useState(false)
+
     function deletePost (event) {
         event.preventDefault()
         
@@ -33,37 +49,62 @@ const PostTile = ({item}) => {
         .then(res =>res.json())
         .then(data =>{
             console.log(data.message)
-            data.message === "post liked" ? setisLiked("liked") : setisLiked("notLiked")
+            data.message === "post liked" ? setisLiked(true) : setisLiked(false)
+            // TODO : update post when liked AND DELETE
+            // fetch("/posts/")
         })
         .catch(error => console.log(error))
     }
 
-
     return (
-        <div className="PostTile" > 
-            <div>
-                 <img className="profilePic" src="https://media-exp1.licdn.com/dms/image/C5603AQEeNp-zoW3yCA/profile-displayphoto-shrink_800_800/0/1648060969196?e=1657756800&v=beta&t=BtbM2gqat69TLd14Qwp6bBPFBkFW-2IvcIp505KoZNw"/> 
-                 <h5>@userName</h5> 
-                 <Button text={<i className="fa-solid fa-trash-can"></i>} onClick={deletePost}/>
-            </div>
-            <div >
-                <img className="publishedImg" src="https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg" />
+        <div> {item.author &&
+        <Grid container className="PostTile" align="center" display="flex" flexDirection="columns" md={5} xs={13} border="0.5px solid grey" > 
+
+
+            {/* TOP PART OF THE POST */}
+
+                <Grid  item={true}  style={{display: "flex", flexDirection:"row", alignItems:"center", width:"100%", justifyContent: "space-between"}} >
+                    <div style={{alignItems: "center", padding:"0 0.3rem"}}>
+                        <NavLink to={`/users/${item.author.userName}`}> <Avatar alt={item.author.userName} src={`/uploads/${item.author.picture}`} /> </NavLink>
+                        <NavLink to={`/users/${item.author.userName}`}> <h5 style={{padding:"0 0.5rem"}}>@{item.author.userName}</h5> </NavLink>
+                    </div>
+                    {userInfo.userName === item.author.userName &&
+                    <IconButton onClick={deletePost} style={{margin:"0 0.5rem"}}>
+                    <DeleteOutlineIcon />
+                    </IconButton >}
+            </Grid>
+            
+            {/* POST IMAGE */}
+
+            <Grid item={true} style={{maxHeight:"100%"}} >
+                <img style={{ objectFit: "cover", maxHeight:"100%", maxWidth:"100%"}} className="publishedImg" src={`/uploads/${item.content.image}`} />
+            </Grid>
+
+            {/* LIKE BUTTON AND DATE */}
+
+            <Grid item={true} style={{display: "flex", flexDirection: "row", padding:"0 0.5rem", alignItems: "center"}}>
                 
-                <div className="likeC">
-                    <Button className={isLiked}  text={<i className="fa-solid fa-heart"></i>} onClick={likePost}/>
+                    {isLiked ? <IconButton onClick={likePost}>< FavoriteIcon color="red" /> </IconButton >: <IconButton onClick={likePost}> <FavoriteBorderIcon style={{color:"red"}} /> </IconButton >}
                     
-                    <p>200</p>
-                </div>
-            </div>
-            <div>
-                <p>This is the description |</p>
-                <p>| 10/05/2022</p>
-            </div>
+                    <Typography color="red">{item.like.length}</Typography>
+                    <p style={{padding:"0 0.5rem"}}><em>{item.date}</em></p>
+                   
+            </Grid>
+            
+
+            {/* POST DESCRIPTION */}
+            
+            <Grid item={true} style={{display: "flex", flexDirection: "column", padding:"0 0.5rem"}}>
+            
+                <p style={{textAlign: "left"}}><strong>{item.author.userName}</strong> : {item.content.text}</p>
+               
+            </Grid>
             
             
 
 
 
+        </Grid>}
         </div>
     )
 }

@@ -1,11 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 export const AuthContext = React.createContext({});
 
 const AuthContextProvider = ({children}) => {
 
   const [userInfo, setUserInfo] = useState({name: "", userName: "", email: ""})
-  console.log('this are the logged user info ' + userInfo.name + ' ' + userInfo.email + ' ' + userInfo.userName)
+  
+
+  async function getLoggedUser() {
+		const response = await fetch(`/auth/getuser`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: { Accept: 'application/json'},
+		});
+
+		try {
+			const data = await response.json();
+			setUserInfo(data);
+		} catch {
+			return null;
+		}
+	}
+
+	useEffect(() => {
+		getLoggedUser();
+	}, []);
 
 
   return (

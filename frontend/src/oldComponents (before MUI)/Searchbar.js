@@ -1,4 +1,4 @@
-import Button from "./Button"
+import Button from "../components/Button"
 import React, {useState, useEffect} from 'react'
 import useFetchRequest from "../helper/fetch"
 import { NavLink } from "react-router-dom"

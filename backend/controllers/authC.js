@@ -19,12 +19,15 @@ async function registerNewUser (req, res) {
     } else {
     
         try {
-   
-            const hashedPassword = await bcrypt.hash(req.body.password, 10)
+      
+
+
+          let userPassword = req.body.password.toString()
+            const hashedPassword = await bcrypt.hash(userPassword, 10)
             
             const user = await userModel.create({
                 //TODO : add profile picture creation
-                picture: req.file.filename,
+                picture: req.file.filename.replace(/\s/g, ""),
                 name: req.body.name,
                 userName: req.body.userName,
                 email: req.body.email,
@@ -35,7 +38,7 @@ async function registerNewUser (req, res) {
 
         } catch(error) {
             console.log(error)
-            return res.status(false).json({message: error});
+            return res.status(500).json({message: error});
         }
     }
 }
@@ -55,7 +58,8 @@ async function loginUser (req, res, next) {
                 email: user.email,
                 name: user.name,
                 userName: user.userName,
-                // picture: user.picture
+                picture: user.picture,
+                id: user._id
              });
           });
         }
@@ -110,9 +114,8 @@ async function updateUser (req,res) {
         userName: req.body.userName || req.user.userName,
         email: req.body.email || req.user.email,
         password: hashedPassword || req.user.hashedPassword,
-        // picture: req.body.picture 
+        picture: req.file.filename.replace(/\s/g, "") || req.user.picture,
     }
-    
    
 
     try {
@@ -120,7 +123,7 @@ async function updateUser (req,res) {
     newUserInfo.userName && await userModel.updateOne({_id: userID}, {userName: newUserInfo.userName}) //update userName
     newUserInfo.email && await userModel.updateOne({_id: userID}, {email: newUserInfo.email}) //update email
     newUserInfo.password && await userModel.updateOne({_id: userID}, {password: newUserInfo.password}) //update password
-
+    newUserInfo.picture && await userModel.updateOne({_id: userID}, {picture: newUserInfo.picture}) //update picture
 
 
     const modifiedUser = await userModel.findOne({name: newUserInfo.name})
@@ -130,7 +133,7 @@ async function updateUser (req,res) {
         email: newUserInfo.email,
         name: newUserInfo.name,
         userName: newUserInfo.userName,
-        // picture: user.picture
+        picture: newUserInfo.picture
      });
     } catch(error) {
       console.log(error)
@@ -138,5 +141,18 @@ async function updateUser (req,res) {
   
 }
 
+const getUser = (req, res) => {
+  res.status(200);
 
-module.exports = {registerNewUser, loginUser, logoutUser, deleteUser, updateUser}
+  if (!req.isAuthenticated()) {
+    res.send();
+  } else {
+    res.json({
+      email: req.user.email,
+      name: req.user.name,
+    });
+  }
+};
+
+
+module.exports = {registerNewUser, loginUser, logoutUser, deleteUser, updateUser, getUser}
