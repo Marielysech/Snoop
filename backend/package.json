@@ -4,7 +4,11 @@
   "description": "Dog social media app",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "build": "npm run install:client:deps && npm run build:client && npm run copy:files",
+    "build:client": "cd ../frontend && npm run build && cd ../backend",
+    "install:client:deps": "cd ../frontend && npm i && cd ../backend",
+    "copy:files": "rm -rf ./public && mkdir ./public && cp -Rv ../frontend/build/* ./public"
   },
   "repository": {
     "type": "git",

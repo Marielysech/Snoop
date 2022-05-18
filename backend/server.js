@@ -105,7 +105,7 @@ app.use(function(req, res, next) {
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, process.env.PORTNAME, (err) => {
+app.listen(PORT, "0.0.0.0", (err) => {
     if (err) console.log(err);
     console.log(`Express server running on port ${PORT}...`);
   })
