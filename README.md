@@ -13,6 +13,8 @@
 * Ability to explore posts from all users in the **Explore Section**
 * Ability to access all posts from a specific user in its **Profile Section**
 * Ability to like specific posts
+* Responsive design
+
 
 # Next features for V2
 
