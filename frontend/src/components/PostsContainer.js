@@ -51,7 +51,7 @@ const PostContainer = ({fetchUrl, filter = false, followed = false}) => {
 
     // rendering for the user page
     if ( filter ) {
-        const post = postsList.filter(item => item.author.userName === userName)
+        const post = postsList.filter(item => item.author?.userName === userName)
         // console.log("hello its true" + post)
         // setfilteredPost(post)
 
@@ -112,7 +112,7 @@ const PostContainer = ({fetchUrl, filter = false, followed = false}) => {
     //rendering for feed page
     if ( followed ) {
         // const post = postsList.filter(item => item.author.userName === userName)
-        const post = postsList.filter(item => item.author.userAction.followedBy.includes(userInfo.id))
+        const post = postsList.filter(item => item.author?.userAction.followedBy.includes(userInfo.id))
 
         // console.log("hello its true" + postsList[0].author.userAction.followedBy[0] + console.log(userInfo.id))
 
