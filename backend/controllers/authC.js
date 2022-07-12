@@ -106,7 +106,7 @@ async function updateUser (req,res) {
     let hashedPassword
     req.body.password && (hashedPassword = await bcrypt.hash(req.body.password, 10))
 
-    console.log(req.user)
+    console.log("this is file name" )
     let userID = req.user._id
 
     let newUserInfo = {
@@ -114,7 +114,7 @@ async function updateUser (req,res) {
         userName: req.body.userName || req.user.userName,
         email: req.body.email || req.user.email,
         password: hashedPassword || req.user.hashedPassword,
-        picture: req.file.filename.replace(/\s/g, "") || req.user.picture,
+        picture: req.user.picture,
     }
    
 

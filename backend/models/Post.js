@@ -4,7 +4,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 
 
 const postSchema = new mongoose.Schema({
-    date:{type: String, default: moment().calendar()},
+    date:{type: String, default: moment().format('LL')},
 
     author:{ type: mongoose.Schema.Types.ObjectId, ref: "User", default : {} },
 
